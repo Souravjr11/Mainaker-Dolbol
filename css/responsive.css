@@ -1,0 +1,481 @@
+/* ==========================================================================
+   MAINAKER DOLBOL — RESPONSIVE DESIGN SYSTEM
+   File: css/responsive.css
+   Targets: 1920px, 1440px, 1024px, 768px, 425px, 375px, 320px
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   LARGE DESKTOP (1920px+)
+   -------------------------------------------------------------------------- */
+@media (min-width: 1800px) {
+  :root {
+    --container-max: 1540px;
+  }
+
+  .hero-headline {
+    font-size: clamp(2.8rem, 4.2vw, 4.6rem);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   STANDARD DESKTOP & LAPTOP (max-width: 1280px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 1280px) {
+  .container,
+  .nav-container {
+    width: min(var(--container-max), 100% - 3rem);
+  }
+
+  .nav-list {
+    gap: 1.3rem;
+  }
+
+  .nav-socials {
+    display: none;
+  }
+
+  .hero-vertical-left {
+    display: none;
+  }
+
+  .event-card {
+    grid-template-columns: 100px 1.2fr 1fr 130px 165px;
+    gap: 1.15rem;
+    padding: 1.35rem 1.5rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   LAPTOP / TABLET LANDSCAPE (max-width: 1024px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .desktop-nav,
+  .btn-nav-book {
+    display: none;
+  }
+
+  .hamburger-btn {
+    display: inline-flex;
+  }
+
+  .hero-right-panel {
+    display: none;
+  }
+
+  .featured-performance-card {
+    grid-template-columns: 1fr;
+  }
+
+  .featured-perf-media {
+    min-height: 360px;
+  }
+
+  .about-grid,
+  .leader-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .leader-portrait-stage {
+    max-width: 540px;
+    margin-inline: auto;
+    width: 100%;
+  }
+
+  .about-image-frame {
+    aspect-ratio: 16 / 10;
+  }
+
+  .about-floating-badge {
+    right: 1rem;
+    bottom: -1.25rem;
+  }
+
+  /* Tablet 2-Column Grids */
+  .artists-grid,
+  .albums-grid,
+  .videos-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.65rem;
+  }
+
+  .spotlight-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .spotlight-portrait-col {
+    max-height: 440px;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .player-console {
+    grid-template-columns: 1fr;
+  }
+
+  .player-now-playing {
+    border-right: none;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .event-card {
+    grid-template-columns: 95px 1fr auto;
+    grid-template-areas:
+      "date title cta"
+      "date loc status";
+    gap: 0.75rem 1.25rem;
+  }
+
+  .event-date-box { grid-area: date; }
+  .event-main-info { grid-area: title; }
+  .event-location { grid-area: loc; }
+  .event-time-status { grid-area: status; align-items: flex-end; }
+  .event-cta-col { grid-area: cta; }
+
+  .gallery-masonry {
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 210px;
+  }
+
+  .press-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .social-thumb-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .footer-top-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   TABLET PORTRAIT & MOBILE (max-width: 768px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  :root {
+    --header-height: 70px;
+  }
+
+  .container,
+  .nav-container {
+    width: calc(100% - 2.25rem);
+  }
+
+  .section-header-split {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  /* Full-Screen Mobile Hero (100svh) */
+  .hero-section {
+    height: auto;
+    min-height: 100svh;
+  }
+
+  .hero-bg-image {
+    object-position: center 20%;
+  }
+
+  .hero-overlay-ltr {
+    background: linear-gradient(
+      180deg,
+      rgba(8, 9, 11, 0.35) 0%,
+      rgba(8, 9, 11, 0.18) 35%,
+      rgba(8, 9, 11, 0.72) 85%,
+      #08090B 100%
+    );
+  }
+
+  .headline-desktop {
+    display: none;
+  }
+
+  .headline-mobile {
+    display: block;
+  }
+
+  .hero-headline {
+    font-size: clamp(2.1rem, 8.5vw, 3.2rem);
+    line-height: 0.96;
+  }
+
+  .hero-explore-btn {
+    display: none;
+  }
+
+  .hero-cta-group {
+    width: 100%;
+    gap: 0.9rem;
+  }
+
+  .hero-waveform-row {
+    display: none;
+  }
+
+  .hero-bottom-bar {
+    padding-bottom: 4.2rem;
+  }
+
+  .hero-bottom-line-wrap {
+    display: none;
+  }
+
+  .featured-performance-section {
+    margin-top: -2.5rem;
+  }
+
+  .perf-metadata-grid {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+  }
+
+  /* Intentional Horizontal Artist Slider on Mobile */
+  .artists-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 1.15rem;
+    padding-bottom: 1rem;
+    margin-inline: -1.125rem;
+    padding-inline: 1.125rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .artists-grid::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  .artists-grid::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .artists-grid::-webkit-scrollbar-thumb {
+    background: var(--accent-primary);
+    border-radius: 99px;
+  }
+
+  .artist-card {
+    flex: 0 0 82%;
+    max-width: 340px;
+    scroll-snap-align: center;
+  }
+
+  /* Horizontal Scrollable Artist Selector on Mobile */
+  .artist-selector-bar {
+    width: 100%;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 0.4rem;
+  }
+
+  .artist-selector-btn {
+    flex: 0 0 auto;
+  }
+
+  .spotlight-specs {
+    grid-template-columns: 1fr;
+  }
+
+  /* 1-Column Albums, Videos & Events on Mobile */
+  .albums-grid,
+  .videos-grid,
+  .leader-credentials-grid {
+    grid-template-columns: 1fr;
+    gap: 1.35rem;
+  }
+
+  .event-card {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "date"
+      "title"
+      "loc"
+      "status"
+      "cta";
+    gap: 0.85rem;
+    padding: 1.35rem;
+  }
+
+  .event-date-box {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 0.75rem;
+    border-right: none;
+    border-bottom: 1px solid var(--border-subtle);
+    padding-right: 0;
+    padding-bottom: 0.65rem;
+  }
+
+  .event-time-status {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .event-cta-col .btn {
+    width: 100%;
+  }
+
+  .booking-banner-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .booking-banner-actions {
+    width: 100%;
+  }
+
+  .booking-banner-actions .btn {
+    width: 100%;
+  }
+
+  .gallery-masonry {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 190px;
+  }
+
+  .gallery-item.span-featured {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+
+  .direct-contact-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-top-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  /* Modals on Mobile */
+  .artist-modal-grid,
+  .form-row-2,
+  .form-row-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .lightbox-stage {
+    grid-template-columns: 1fr;
+    position: relative;
+  }
+
+  .lightbox-nav-btn {
+    position: absolute;
+    top: 42%;
+    z-index: 4;
+  }
+
+  .lightbox-nav-btn.prev { left: 0.5rem; }
+  .lightbox-nav-btn.next { right: 0.5rem; }
+}
+
+/* --------------------------------------------------------------------------
+   SMALL MOBILE (425px, 375px, 320px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 480px) {
+  .container,
+  .nav-container {
+    width: calc(100% - 1.75rem);
+  }
+
+  .hero-cta-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-cta-group .btn {
+    width: 100%;
+  }
+
+  .hero-watch-btn {
+    justify-content: center;
+    margin-left: 0;
+    padding: 0.5rem 0;
+  }
+
+  .scroll-text {
+    font-size: 0.62rem;
+  }
+
+  .about-pillars,
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+  }
+
+  .player-artwork-stage {
+    width: 100%;
+    height: auto;
+  }
+
+  .player-video-frame {
+    width: 100%;
+    height: auto;
+    min-height: 200px;
+    aspect-ratio: 16 / 9;
+  }
+
+  .vinyl-disc {
+    display: none;
+  }
+
+  .player-controls-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .player-transport {
+    justify-content: center;
+  }
+
+  .player-volume-box {
+    justify-content: center;
+  }
+
+  .gallery-masonry {
+    grid-template-columns: 1fr;
+    grid-auto-rows: 230px;
+  }
+
+  .gallery-item.span-wide,
+  .gallery-item.span-tall,
+  .gallery-item.span-featured {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+
+  .social-thumb-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .final-cta-buttons .btn {
+    width: 100%;
+  }
+
+  .booking-form-actions .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 350px) {
+  .hero-headline {
+    font-size: 2.45rem;
+  }
+
+  .brand-text {
+    font-size: 1.2rem;
+  }
+
+  .artist-card {
+    flex: 0 0 90%;
+  }
+}
+

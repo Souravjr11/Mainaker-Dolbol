@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html lang="en" class="dark-theme">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ==================================================
+       SEO & METADATA — REPLACE BAND NAME & URLS BELOW
+  =================================================== -->
+  <title>MAINAKER DOLBOL — Six Artists. One Sound. | Official Band &amp; Live Collective</title>
+  <meta name="description" content="MAINAKER DOLBOL is a premier six-piece live music collective blending cinematic rock, atmospheric electronic soundscapes, and unforgettable stage energy. Explore the artists, albums, live concerts, and booking.">
+  <meta name="keywords" content="MAINAKER DOLBOL, live band, music collective, six artists, concert booking, Bengali folk rock band, Mainak Paladhi, Arijit Talukder, Sanjay Seal, Supratim Bhattacharya, Udayan Chakraborty, Subha Chatterjee, Kolkata live band">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#08090B">
+
+  <!-- REPLACE WITH REAL CANONICAL URL -->
+  <link rel="canonical" href="https://www.mainakerdolbol.com/">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="music.musician">
+  <meta property="og:url" content="https://www.mainakerdolbol.com/">
+  <meta property="og:title" content="MAINAKER DOLBOL — One Band. Six Stories. One Sound.">
+  <meta property="og:description" content="Six artists. Different voices. One unforgettable musical experience. Listen to our latest releases, watch live sessions, and book the band.">
+  <meta property="og:image" content="assets/hero/band-1.jpg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="MAINAKER DOLBOL — Six Artists. One Sound.">
+  <meta name="twitter:description" content="Six artists. Different voices. One unforgettable musical experience. Explore live performances, discography, and upcoming shows.">
+  <meta name="twitter:image" content="assets/hero/band-1.jpg">
+
+  <!-- REPLACE WITH REAL FAVICON -->
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <!-- Schema.org MusicGroup Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MusicGroup",
+    "name": "MAINAKER DOLBOL",
+    "url": "https://www.mainakerdolbol.com/",
+    "logo": "https://www.mainakerdolbol.com/assets/images/favicon.svg",
+    "image": "https://www.mainakerdolbol.com/assets/hero/band-1.jpg",
+    "description": "Six artists. One sound. A high-energy live music collective built around rhythm, atmosphere, and emotion.",
+    "foundingDate": "2026",
+    "foundingLocation": {
+      "@type": "Place",
+      "name": "Kolkata, India"
+    },
+    "genre": ["Cinematic Alternative", "Atmospheric Rock", "Live Electronic Fusion", "Indie Nocturne"],
+    "email": "BOOKING@BANDNAME.COM",
+    "telephone": "+91-99999-99999",
+    "sameAs": [
+      "https://www.instagram.com/mainakerdolbol",
+      "https://www.youtube.com/@mainakerdolbol",
+      "https://open.spotify.com/artist/mainakerdolbol",
+      "https://www.facebook.com/mainakerdolbol"
+    ],
+    "member": [
+      { "@type": "Person", "name": "Mainak Paladhi", "roleName": "Founder & Lead Vocalist" },
+      { "@type": "Person", "name": "Arijit Talukder", "roleName": "Tabla" },
+      { "@type": "Person", "name": "Sanjay Seal", "roleName": "Lead Guitarist" },
+      { "@type": "Person", "name": "Supratim Bhattacharya", "roleName": "Octopad" },
+      { "@type": "Person", "name": "Udayan Chakraborty", "roleName": "Keyboardist" },
+      { "@type": "Person", "name": "Subha Chatterjee", "roleName": "Full Band Manager" }
+    ],
+    "album": [
+      { "@type": "MusicAlbum", "name": "After Dark", "datePublished": "2026" },
+      { "@type": "MusicAlbum", "name": "Echoes", "datePublished": "2025" },
+      { "@type": "MusicAlbum", "name": "Midnight Sessions", "datePublished": "2025" },
+      { "@type": "MusicAlbum", "name": "Live / Unfiltered", "datePublished": "2024" },
+      { "@type": "MusicAlbum", "name": "Nocturne", "datePublished": "2024" },
+      { "@type": "MusicAlbum", "name": "The First Chapter", "datePublished": "2023" }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <!-- Skip to Content for Keyboard Accessibility -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- ==================================================
+       AMBIENT VISUAL EFFECTS (FILM GRAIN, SPOTLIGHT, CURSOR)
+  =================================================== -->
+  <div class="film-grain" aria-hidden="true"></div>
+  <div class="cursor-spotlight" id="cursorSpotlight" aria-hidden="true"></div>
+
+  <!-- Custom Cursor (Desktop Only) -->
+  <div class="custom-cursor-dot" id="cursorDot" aria-hidden="true"></div>
+  <div class="custom-cursor-ring" id="cursorRing" aria-hidden="true">
+    <span class="cursor-label" id="cursorLabel"></span>
+  </div>
+
+  <!-- ==================================================
+       1. LOADING SCREEN
+  =================================================== -->
+  <div class="loader-screen" id="loader" role="status" aria-live="polite" aria-label="Loading Mainaker Dol Bol experience">
+    <div class="loader-inner">
+      <!-- BAND LOGO -->
+      <div class="loader-logo">
+        <img src="assets/gallery/logo.png" alt="Mainaker Dol Bol — Folk Band Logo" class="loader-logo-img" width="260" height="130">
+      </div>
+      <p class="loader-tagline">THE SOUND BEGINS</p>
+      <div class="loader-progress-track" aria-hidden="true">
+        <div class="loader-progress-bar" id="loaderBar"></div>
+      </div>
+      <div class="loader-meta" aria-hidden="true">
+        <span>COLLECTIVE ARCHIVE</span>
+        <span id="loaderPercent">0%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================================================
+       2. NAVIGATION BAR (STICKY GLASS HEADER + MOBILE OVERLAY)
+  =================================================== -->
+  <header class="site-header" id="navbar">
+    <div class="nav-container">
+      <!-- LEFT: Band Logo / Brand Name -->
+      <a href="#home" class="brand-logo" aria-label="Mainaker Dol Bol Home">
+        <img src="assets/gallery/logo.png" alt="Mainaker Dol Bol — Folk Band" class="brand-logo-img" width="160" height="80">
+      </a>
+
+      <!-- CENTER: Desktop Anchor Navigation -->
+      <nav class="desktop-nav" aria-label="Primary Navigation">
+        <ul class="nav-list">
+          <li><a href="#home" class="nav-link active" data-section="home">Home</a></li>
+          <li><a href="#leader" class="nav-link" data-section="leader">Mainak</a></li>
+          <li><a href="#achievements" class="nav-link" data-section="achievements">Achievements</a></li>
+          <li><a href="#artists" class="nav-link" data-section="artists">Artists</a></li>
+          <li><a href="#music" class="nav-link" data-section="music">Music</a></li>
+          <li><a href="#albums" class="nav-link" data-section="albums">Albums</a></li>
+          <li><a href="#concerts" class="nav-link" data-section="concerts">Concerts</a></li>
+          <li><a href="#videos" class="nav-link" data-section="videos">Videos</a></li>
+          <li><a href="#gallery" class="nav-link" data-section="gallery">Gallery</a></li>
+          <li><a href="#contact" class="nav-link" data-section="contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- RIGHT: Social Icons + BOOK NOW CTA -->
+      <div class="nav-actions">
+        <!-- REPLACE SOCIAL URLS BELOW -->
+        <div class="nav-socials" aria-label="Band Social Media">
+          <a href="https://www.instagram.com/mainakpaladhi?utm_source=ig_web_button_share_sheet&stkn=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="social-icon-link">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+          </a>
+          <a href="https://youtube.com/@mainak311?si=jDNFlza-Sr9qLp1-" target="_blank" rel="noopener noreferrer" aria-label="YouTube" class="social-icon-link">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+          </a>
+          <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="social-icon-link">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+          </a>
+          <a href="https://open.spotify.com/" target="_blank" rel="noopener noreferrer" aria-label="Spotify" class="social-icon-link">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M8 14.5c2.5-1 5.5-1 8 0"></path><path d="M7 11.5c3.5-1.2 6.5-1.2 10 0"></path><path d="M9 17.5c2-.7 4-.7 6 0"></path></svg>
+          </a>
+        </div>
+
+        <button type="button" class="btn btn-primary btn-nav-book magnetic-btn" data-open-booking="General Band Booking">
+          <span>BOOK NOW</span>
+        </button>
+
+        <!-- Mobile Hamburger Button -->
+        <button type="button" class="hamburger-btn" id="menuToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobileMenu">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Full-Screen Mobile Navigation Overlay -->
+  <div class="mobile-menu-overlay" id="mobileMenu" aria-hidden="true">
+    <div class="mobile-menu-inner">
+      <div class="mobile-menu-eyebrow">THE SOUND OF SIX • NAVIGATION</div>
+      <nav aria-label="Mobile Navigation">
+        <ul class="mobile-nav-list">
+          <li style="--item-index: 1;"><a href="#home" class="mobile-nav-link"><span>01</span> Home</a></li>
+          <li style="--item-index: 2;"><a href="#leader" class="mobile-nav-link"><span>02</span> Mainak</a></li>
+          <li style="--item-index: 3;"><a href="#achievements" class="mobile-nav-link"><span>03</span> Achievements</a></li>
+          <li style="--item-index: 4;"><a href="#artists" class="mobile-nav-link"><span>04</span> Artists</a></li>
+          <li style="--item-index: 5;"><a href="#music" class="mobile-nav-link"><span>05</span> Music</a></li>
+          <li style="--item-index: 6;"><a href="#albums" class="mobile-nav-link"><span>06</span> Albums</a></li>
+          <li style="--item-index: 7;"><a href="#concerts" class="mobile-nav-link"><span>07</span> Concerts</a></li>
+          <li style="--item-index: 8;"><a href="#videos" class="mobile-nav-link"><span>08</span> Videos</a></li>
+          <li style="--item-index: 9;"><a href="#gallery" class="mobile-nav-link"><span>09</span> Gallery</a></li>
+          <li style="--item-index: 10;"><a href="#contact" class="mobile-nav-link"><span>10</span> Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="mobile-menu-footer">
+        <button type="button" class="btn btn-primary btn-block" data-open-booking="Mobile Menu Inquiry">
+          BOOK THE BAND
+        </button>
+        <div class="mobile-socials">
+          <a href="instagram.com/mainakpaladhi" target="_blank" rel="noopener noreferrer">Instagram</a>
+          <a href="https://www.youtube.com/@mainak311" target="_blank" rel="noopener noreferrer">YouTube</a>
+          <a href="https://open.spotify.com/" target="_blank" rel="noopener noreferrer">Spotify</a>
+          <a href="facebook.com/mainakpaladhifolk" target="_blank" rel="noopener noreferrer">Facebook</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main id="main-content">
+
+    <!-- ==================================================
+         3. FULL-SCREEN CINEMATIC BAND HERO (100vw x 100vh)
+    =================================================== -->
+    <section class="hero-section" id="home" aria-label="Main Band Introduction">
+      <!-- Background Slideshow Container -->
+      <div class="hero-media-wrapper" id="heroParallaxBg">
+        <div class="hero-slideshow" id="heroSlideshow">
+          <!-- Slide 01 (LCP Candidate Image with <picture> for mobile/desktop) -->
+          <div class="hero-slide active" data-slide-index="0">
+            <picture>
+              <!-- REPLACE WITH DEDICATED MOBILE & DESKTOP BAND GROUP PHOTOS -->
+              <source media="(max-width: 768px)" srcset="assets/hero/band-1.png">
+              <img
+                src="assets/hero/band-1.png"
+                alt="MAINAKER DOLBOL — Six band members performing together on a dramatic lit stage"
+                class="hero-bg-image"
+                fetchpriority="high"
+                width="1920"
+                height="1080"
+              >
+            </picture>
+          </div>
+          <!-- Slide 02 -->
+          <div class="hero-slide" data-slide-index="1">
+            <img
+              src="assets/hero/band-2.jpg"
+              alt="MAINAKER DOLBOL live concert stage atmosphere with dramatic lighting"
+              class="hero-bg-image"
+              fetchpriority="low"
+              loading="lazy"
+              width="1920"
+              height="1080"
+            >
+          </div>
+          <!-- Slide 03 -->
+          <div class="hero-slide" data-slide-index="2">
+            <img
+              src="assets/hero/band-3.jpg"
+              alt="MAINAKER DOLBOL performing before a packed arena crowd"
+              class="hero-bg-image"
+              fetchpriority="low"
+              loading="lazy"
+              width="1920"
+              height="1080"
+            >
+          </div>
+        </div>
+
+        <!-- Multi-layered Cinematic Overlays (Left->Right, Bottom->Top, Edge Vignette) -->
+        <div class="hero-overlay-ltr" aria-hidden="true"></div>
+        <div class="hero-overlay-btt" aria-hidden="true"></div>
+        <div class="hero-overlay-vignette" aria-hidden="true"></div>
+
+        <!-- Subtle Floating Light Particles Canvas -->
+        <canvas class="hero-particles" id="heroParticles" aria-hidden="true"></canvas>
+      </div>
+
+      <!-- Vertical Left Label (Desktop) -->
+      <div class="hero-vertical-left" aria-hidden="true">
+        <span>EST. 2026</span>
+        <span class="vertical-divider"></span>
+        <span>MAINAKER DOLBOL COLLECTIVE</span>
+      </div>
+
+      <!-- Main Hero Content (Positioned Left on Desktop) -->
+      <div class="container hero-container" id="heroParallaxContent">
+        <div class="hero-content">
+          <!-- Band Name & Eyebrow -->
+          <div class="hero-identity-row reveal-up">
+            <!-- REPLACE BAND NAME HERE -->
+            <span class="hero-band-badge">MAINAKER DOLBOL</span>
+            <span class="hero-identity-dot"></span>
+            <span class="hero-eyebrow">THE SOUND OF SIX</span>
+            <span class="hero-est-pill">EST. 2026</span>
+          </div>
+
+          <!-- Large Editorial Headline -->
+          <h1 class="hero-headline reveal-up" style="--delay: 0.1s;">
+            <span class="headline-desktop">
+              <span class="line-mask"><span>ONE BAND.</span></span>
+              <span class="line-mask"><span>SIX <em class="text-accent">STORIES.</em></span></span>
+              <span class="line-mask"><span>ONE SOUND.</span></span>
+            </span>
+            <span class="headline-mobile">
+              <span>ONE BAND.</span>
+              <span>ONE <em class="text-accent">SOUND.</em></span>
+            </span>
+          </h1>
+
+          <!-- Supporting Editorial Copy -->
+          <p class="hero-description reveal-up" style="--delay: 0.2s;">
+            Six artists. Different voices. One unforgettable musical experience.
+            A live experience built around rhythm, energy and emotion — where music becomes experience.
+          </p>
+
+          <!-- Action Buttons + Circular Play Button -->
+          <div class="hero-cta-group reveal-up" style="--delay: 0.3s;">
+            <a href="#artists" class="btn btn-outline magnetic-btn hero-explore-btn">
+              <span>EXPLORE THE BAND</span>
+            </a>
+
+            <button type="button" class="btn btn-primary magnetic-btn" data-open-booking="Hero Section Booking">
+              <span>BOOK NOW</span>
+            </button>
+
+            <!-- Live Performance Play Button -->
+            <button
+              type="button"
+              class="hero-watch-btn"
+              data-cursor="play"
+              data-video-url="assets/videos/1.mp4"
+              data-video-title="MAINAKER DOLBOL — Live Concert Glimpse"
+              aria-label="Watch Live Performance Video"
+            >
+              <span class="play-circle">
+                <span class="play-circle-pulse" aria-hidden="true"></span>
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"></polygon></svg>
+              </span>
+              <span class="watch-label">WATCH LIVE</span>
+            </button>
+          </div>
+
+          <!-- Decorative Animated Music Waveform -->
+          <div class="hero-waveform-row reveal-up" style="--delay: 0.4s;" aria-hidden="true">
+            <div class="waveform-bars">
+              <span></span><span></span><span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <span class="waveform-caption">LIVE AUDIO SESSION • ATMOSPHERIC STEREO</span>
+          </div>
+        </div>
+
+        <!-- Right-Side Minimal Vertical Info Panel (Desktop) -->
+        <aside class="hero-right-panel reveal-fade" style="--delay: 0.35s;" aria-label="Performance Highlights">
+          <div class="hero-panel-block">
+            <span class="panel-label">LIVE PERFORMANCE</span>
+            <strong class="panel-value">KOLKATA &bull; 2026</strong>
+          </div>
+          <div class="hero-panel-sep" aria-hidden="true"></div>
+          <div class="hero-panel-block">
+            <span class="panel-label">6 ARTISTS</span>
+            <strong class="panel-value">1 MUSICAL EXPERIENCE</strong>
+          </div>
+          <div class="hero-panel-sep" aria-hidden="true"></div>
+          <div class="hero-panel-block">
+            <span class="panel-label">CURRENT ERA</span>
+            <strong class="panel-value text-gold">AFTER DARK TOUR</strong>
+          </div>
+        </aside>
+      </div>
+
+      <!-- Bottom Hero Area -->
+      <div class="hero-bottom-bar">
+        <div class="container hero-bottom-inner">
+          <!-- LEFT: Scroll to Discover -->
+          <a href="#about" class="scroll-discover-link" aria-label="Scroll to About The Band">
+            <span class="scroll-text">SCROLL TO DISCOVER</span>
+            <span class="scroll-arrow" aria-hidden="true">&darr;</span>
+          </a>
+
+          <!-- CENTER: Thin Animated Horizontal Line -->
+          <div class="hero-bottom-line-wrap" aria-hidden="true">
+            <div class="hero-bottom-line">
+              <span class="hero-line-runner"></span>
+            </div>
+          </div>
+
+          <!-- RIGHT: Slideshow Indicators (01 02 03) + 01 / 06 Counter -->
+          <div class="hero-bottom-right">
+            <div class="hero-slide-indicators" role="tablist" aria-label="Hero background slideshow controls">
+              <button type="button" class="hero-indicator active" data-slide-to="0" role="tab" aria-selected="true" aria-label="Slide 1">01</button>
+              <button type="button" class="hero-indicator" data-slide-to="1" role="tab" aria-selected="false" aria-label="Slide 2">02</button>
+              <button type="button" class="hero-indicator" data-slide-to="2" role="tab" aria-selected="false" aria-label="Slide 3">03</button>
+            </div>
+            <span class="hero-counter-sep" aria-hidden="true"></span>
+            <div class="hero-fraction-counter" aria-live="polite">
+              <strong id="heroSlideCurrent">01</strong>
+              <span>/</span>
+              <span>03</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================
+         5. ABOUT THE BAND (EDITORIAL SPLIT SECTION)
+    =================================================== -->
+    <section class="about-section section-padding" id="about" aria-labelledby="about-heading">
+      <div class="container">
+        <div class="about-grid">
+          <!-- LEFT: Large Artist / Band Photograph -->
+          <div class="about-visual reveal-left">
+            <div class="about-image-frame" data-cursor="view">
+              <!-- REPLACE ABOUT BAND PHOTOGRAPH -->
+              <img
+                src="assets/gallery/about-image.png"
+                alt="MAINAKER DOLBOL band members in studio rehearsal"
+                class="about-img"
+                loading="lazy"
+                width="800"
+                height="960"
+              >
+              <div class="about-image-vignette" aria-hidden="true"></div>
+            </div>
+            <div class="about-floating-badge">
+              <span class="badge-num">06</span>
+              <div class="badge-copy">
+                <strong>DISTINCT VOICES</strong>
+                <span>UNITED IN KOLKATA &bull; EST. 2026</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT: Editorial Narrative -->
+          <div class="about-copy reveal-right">
+            <span class="section-label">ABOUT THE BAND</span>
+            <h2 class="section-title" id="about-heading">
+              Six Artists.<br>
+              <em class="text-accent">One Musical Identity.</em>
+            </h2>
+
+            <p class="about-lead">
+              Built around individuality, chemistry and a shared passion for live performance, <strong>MAINAKER DOLBOL</strong> brings together six musicians with different backgrounds and one common purpose — creating unforgettable musical experiences.
+            </p>
+
+            <p class="about-body">
+              Blending soulful Bengali folk roots with contemporary rock, acoustic warmth, and dynamic percussion, every arrangement is sculpted in our studio sessions before coming alive on stage. We don’t just play sets; we craft stories that connect stage and audience.
+            </p>
+
+            <div class="about-pillars">
+              <div class="about-pillar-item">
+                <span class="pillar-num">01</span>
+                <div>
+                  <strong>SOULFUL FOLK &amp; ROCK</strong>
+                  <span>Rooted in melody &amp; rhythm</span>
+                </div>
+              </div>
+              <div class="about-pillar-item">
+                <span class="pillar-num">02</span>
+                <div>
+                  <strong>100% LIVE ENERGY</strong>
+                  <span>Authentic acoustic &amp; stage sound</span>
+                </div>
+              </div>
+            </div>
+
+            <hr class="editorial-divider" aria-hidden="true">
+
+            <div class="about-signature-row">
+              <!-- Decorative Signature SVG -->
+              <div class="signature-block" aria-hidden="true">
+                <svg class="signature-svg" viewBox="0 0 220 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8 42C24 16 36 12 42 36C46 50 62 14 78 24C92 33 88 44 106 28C124 12 136 42 152 26C168 10 184 34 212 18" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round"/>
+                  <path d="M32 48L188 44" stroke="#E11D48" stroke-opacity="0.6" stroke-width="1" stroke-linecap="round"/>
+                </svg>
+                <span class="signature-caption">MAINAKER DOLBOL COLLECTIVE</span>
+              </div>
+
+              <a href="#leader" class="btn btn-outline magnetic-btn">
+                <span>MEET THE FOUNDER</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================
+         5B. FOUNDER & LEAD VOCALIST PORTFOLIO ("MAINAK PALADHI")
+    =================================================== -->
+    <section class="leader-section section-padding" id="leader" aria-labelledby="leader-heading">
+      <div class="container">
+        <!-- Top Section Banner -->
+        <div class="leader-section-header reveal-up">
+          <div class="leader-badge-strip">
+            <span class="leader-crown-pill">FOUNDER &amp; LEAD VOCALIST</span>
+            <span class="leader-dot" aria-hidden="true"></span>
+            <span class="leader-bengali-tag">মৈনাকের দলবল — THE VOICE BEHIND THE NAME</span>
+          </div>
+          <h2 class="section-title leader-main-title" id="leader-heading">
+            MAINAK <em class="text-accent">PALADHI</em>
+          </h2>
+          <p class="leader-header-sub">
+            The soulful voice, folk revivalist, and creative force whose name and musical journey gave birth to <strong>MAINAKER DOLBOL</strong>.
+          </p>
+        </div>
+
+        <!-- PART 1: Monumental Portrait Stage + Founder Biography -->
+        <div class="leader-hero-grid">
+          <!-- LEFT: Big Dual-Portrait Visual Showcase -->
+          <div class="leader-portrait-stage reveal-left">
+            <div
+              class="leader-primary-frame"
+              data-cursor="view"
+              data-lightbox-src="assets/artists/artist-vocalist.jpeg"
+              data-lightbox-title="Mainak Paladhi — Founder & Lead Vocalist of MAINAKER DOLBOL"
+              data-lightbox-cat="FOUNDER PORTRAIT"
+              tabindex="0"
+              role="button"
+              aria-label="View full-size stage portrait of Mainak Paladhi"
+            >
+              <img
+                src="assets/artists/artist-vocalist.jpeg"
+                alt="Mainak Paladhi — Founder and Lead Vocalist of MAINAKER DOLBOL performing live on stage"
+                class="leader-primary-img"
+                loading="lazy"
+                width="900"
+                height="1100"
+              >
+              <div class="leader-frame-gradient" aria-hidden="true"></div>
+              <div class="leader-stage-caption">
+                <span class="stage-caption-label">CENTRESTAGE</span>
+                <strong>MAINAK PALADHI &bull; LIVE IN CONCERT</strong>
+              </div>
+            </div>
+
+            <!-- Secondary Overlapping Khamak Portrait -->
+            <div
+              class="leader-secondary-frame"
+              data-cursor="view"
+              data-lightbox-src="assets/artists/artist-vocalist-2.jpeg"
+              data-lightbox-title="Mainak Paladhi performing with his signature Khamak on stage"
+              data-lightbox-cat="LIVE FOLK ARTISTRY"
+              tabindex="0"
+              role="button"
+              aria-label="View portrait of Mainak Paladhi playing Khamak"
+            >
+              <img
+                src="assets/artists/artist-vocalist-2.jpeg"
+                alt="Mainak Paladhi singing with traditional Khamak on stage"
+                class="leader-secondary-img"
+                loading="lazy"
+                width="480"
+                height="360"
+              >
+              <span class="secondary-frame-tag">VOCALS &amp; KHAMAK</span>
+            </div>
+
+            <!-- Floating Live Video Trigger Badge -->
+            <button
+              type="button"
+              class="leader-video-badge"
+              data-cursor="play"
+              data-video-url="assets/videos/1.mp4"
+              data-video-title="Mainak Paladhi — Live Concert Performance (MAINAKER DOLBOL)"
+            >
+              <span class="leader-play-icon">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"></polygon></svg>
+              </span>
+              <span class="leader-play-copy">
+                <strong>WATCH MAINAK LIVE</strong>
+                <span>STAGE PERFORMANCE</span>
+              </span>
+            </button>
+          </div>
+
+          <!-- RIGHT: Editorial Biography, Lineage & Signature Pillars -->
+          <div class="leader-bio-col reveal-right">
+            <span class="section-label">THE ARTIST &amp; VISIONARY</span>
+            <h3 class="leader-bio-heading">
+              Carrying the Earthy Soul of Bengal’s Folk Heritage to the Modern Stage.
+            </h3>
+
+            <p class="leader-lead-copy">
+              <strong>"Mainaker Dolbol"</strong> literally translates to <em>"Mainak’s Troupe"</em> — a collective built around the magnetic voice, storytelling, and lifelong musical devotion of lead vocalist <strong>Mainak Paladhi</strong>. Steeped in the earthy fragrance of Bengal’s soil (মাটির সোঁদা গন্ধ), his voice bridges centuries-old Lokogiti and Baul traditions with contemporary live concert energy.
+            </p>
+
+            <p class="leader-body-copy">
+              Trained under the revered Bengali folk maestro <strong>Guru Abhijit Basu</strong>, Mainak has dedicated his artistic life to bringing authentic folk melodies to a new generation. With four studio albums to his credit — including his acclaimed Lokogiti album <strong><em>'Bhitor Bahire' (ভিতর বাহিরে)</em></strong> released by <strong>Sagarika Music</strong> — Mainak commands the stage with his signature <strong>Khamak</strong>, soaring vocal range, and an unmistakable connection with his audience.
+            </p>
+
+            <!-- 4 Credentials & Highlights Grid -->
+            <div class="leader-credentials-grid">
+              <div class="credential-card">
+                <span class="credential-tag">01 &bull; IDENTITY</span>
+                <h4>THE NAMESAKE &amp; LEADER</h4>
+                <p>Founder and frontman whose artistic vision united six musicians into <strong>Mainaker Dolbol</strong>.</p>
+              </div>
+
+              <div class="credential-card">
+                <span class="credential-tag">02 &bull; GHARANA &amp; GURU</span>
+                <h4>LOKOGITI LINEAGE</h4>
+                <p>Disciple of celebrated folk maestro <strong>Abhijit Basu</strong>, preserving authentic Bengali folk roots.</p>
+              </div>
+
+              <div class="credential-card">
+                <span class="credential-tag">03 &bull; DISCOGRAPHY</span>
+                <h4>4+ STUDIO ALBUMS</h4>
+                <p>Creator of acclaimed releases including <strong>'Bhitor Bahire'</strong> under <strong>Sagarika Music</strong>.</p>
+              </div>
+
+              <div class="credential-card">
+                <span class="credential-tag">04 &bull; STAGE CRAFT</span>
+                <h4>VOCALS &amp; KHAMAK</h4>
+                <p>Signature live performances blending soulful Lokogiti vocals, traditional Khamak, and rock fusion.</p>
+              </div>
+            </div>
+
+            <!-- Artist Quote -->
+            <blockquote class="leader-quote-box">
+              <p>“লোকগান আমার শিকড়, আর মঞ্চ আমার উপাসনা — মাটির সোঁদা গন্ধটুকু গানের ডালি সাজিয়ে মানুষের হৃদয়ে পৌঁছে দেওয়াই আমার সাধনা।”</p>
+              <cite>— MAINAK PALADHI, FOUNDER &amp; LEAD VOCALIST</cite>
+            </blockquote>
+
+            <!-- Action & Direct Socials Row -->
+            <div class="leader-cta-row">
+              <button type="button" class="btn btn-primary magnetic-btn" data-open-booking="Mainak Paladhi — Lead Vocalist & Band Booking">
+                <span>BOOK MAINAK &amp; THE BAND</span>
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-outline magnetic-btn"
+                data-cursor="play"
+                data-video-url="assets/videos/1.mp4"
+                data-video-title="Mainak Paladhi — Live Concert Performance"
+              >
+                <span>WATCH PERFORMANCE</span>
+              </button>
+
+              <div class="leader-social-pills">
+                <a href="https://www.instagram.com/mainakpaladhi?utm_source=ig_web_button_share_sheet&stkn=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" class="leader-social-pill" aria-label="Mainak Paladhi on Instagram">
+                  Instagram &nearr;
+                </a>
+                <a href="https://youtube.com/@mainak311?si=jDNFlza-Sr9qLp1-" target="_blank" rel="noopener noreferrer" class="leader-social-pill" aria-label="Mainak Paladhi on YouTube">
+                  YouTube &nearr;
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================================================
+         5C. ACHIEVEMENTS, AWARDS & PRESS ARCHIVE SECTION
+    =================================================== -->
+    <section class="achievements-section section-padding" id="achievements" aria-labelledby="achievements-heading">
+      <div class="container">
+        <div class="achievements-top-bar reveal-up">
+          <div>
+            <div class="achievements-eyebrow-row">
+              <span class="leader-crown-pill">AWARDS &amp; HONORS</span>
+              <span class="leader-dot"></span>
+              <span class="section-label" style="margin-bottom: 0;">FILM FESTIVALS &bull; ALBUM LAUNCHES &bull; PRINT MEDIA</span>
+            </div>
+            <h2 class="section-title" id="achievements-heading">ACHIEVEMENTS &amp; PRESS ARCHIVE</h2>
+            <p class="achievements-sub">
+              International film festival Best Singer &amp; Best Music Video trophies, official album unveilings at Kolkata Press Club, and features in leading Bengali newspapers and magazines. Click any photograph to inspect in full resolution or watch the award ceremony videos.
+            </p>
+          </div>
+
+          <!-- Filter Tabs + Slider Arrows Bar -->
+          <div class="achievements-controls-bar">
+            <div class="gallery-filter-tabs achievements-filter-tabs" id="achievementsFilterTabs" role="tablist" aria-label="Filter achievements by category">
+              <button type="button" class="filter-tab active" data-achievement-filter="ALL" role="tab" aria-selected="true">ALL (16)</button>
+              <button type="button" class="filter-tab" data-achievement-filter="AWARDS" role="tab" aria-selected="false">AWARDS &amp; TROPHIES (5)</button>
+              <button type="button" class="filter-tab" data-achievement-filter="PRESS" role="tab" aria-selected="false">PRESS &amp; MEDIA (7)</button>
+              <button type="button" class="filter-tab" data-achievement-filter="ALBUMS" role="tab" aria-selected="false">ALBUM LAUNCH (2)</button>
+              <button type="button" class="filter-tab" data-achievement-filter="VIDEOS" role="tab" aria-selected="false">CEREMONY VIDEOS (2)</button>
+            </div>
+
+            <div class="achievements-slider-nav" aria-label="Achievements Slider Navigation">
+              <button type="button" class="ach-slider-btn" id="achSliderPrev" aria-label="Previous achievement slide">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+              </button>
+              <span class="ach-slider-status" id="achSliderStatus">01 / 16</span>
+              <button type="button" class="ach-slider-btn" id="achSliderNext" aria-label="Next achievement slide">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5-in-a-Row Auto-Slider Viewport (Advances automatically every 3 seconds) -->
+        <div class="achievements-slider-viewport" id="achievementsViewport">
+          <div class="achievements-grid achievements-slider-track" id="achievementsGrid" aria-live="polite"></div>
+        </div>
+
+        <!-- Slider Dots Indicator -->
+        <div class="achievements-slider-dots" id="achievementsSliderDots" aria-label="Slide indicators"></div>
+      </div>
+    </section>
+
+    <!-- ==================================================
+         6. SIX ARTISTS SECTION ("MEET THE ARTISTS")
+    =================================================== -->
+    <section class="artists-section section-padding" id="artists" aria-labelledby="artists-heading">
+      <div class="container">
+        <div class="section-header-split reveal-up">
+          <div>
+            <span class="section-label">THE COLLECTIVE</span>
+            <h2 class="section-title" id="artists-heading">MEET THE ARTISTS</h2>
+          </div>
+          <p class="section-subtitle">
+            Different personalities. Different instruments. One sound. Click any artist to explore their full profile, gear, and signature performances.
+          </p>
+        </div>
+
+        <!-- Dynamically Populated by js/artists.js (Asymmetric 3-column grid on desktop, touch slider on mobile) -->
+        <div class="artists-grid" id="artistsGrid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- ==================================================
+         7. ARTIST INTERACTIVE EXPERIENCE (DYNAMIC SELECTOR)
+    =================================================== -->
+    <section class="artist-spotlight-section section-padding" id="artist-spotlight" aria-labelledby="spotlight-heading">
+      <div class="container">
+        <div class="spotlight-top-bar reveal-up">
+          <div>
+            <span class="section-label">INTERACTIVE ARCHIVE</span>
+            <h2 class="section-title-sm" id="spotlight-heading">ARTIST IN FOCUS</h2>
+          </div>
+
+          <!-- Horizontal Artist Selector (01 MAINAK ... 06 SUBHA) generated/managed by js/artists.js -->
+          <div class="artist-selector-bar" id="artistSelectorBar" role="tablist" aria-label="Select an artist to inspect"></div>
+        </div>
+
+        <!-- Dynamic Artist Spotlight Stage -->
+        <div class="spotlight-stage reveal-up" id="artistSpotlightStage" role="tabpanel" aria-live="polite">
+          <!-- Populated dynamically by js/artists.js without reloading page -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================
+         8. BAND STATISTICS (INTERSECTION OBSERVER COUNTERS)
+    =================================================== -->
+    <section class="stats-section" id="stats" aria-label="Band Milestones and Statistics">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-card reveal-up" style="--delay: 0s;">
+            <div class="stat-number-wrap">
+              <span class="stat-counter" data-target="120" data-suffix="+">0</span>
+            </div>
+            <span class="stat-line" aria-hidden="true"></span>
+            <h3 class="stat-label">LIVE PERFORMANCES</h3>
+            <p class="stat-note">Sold-out arenas, intimate clubs &amp; headline festivals</p>
+          </div>
+
+          <div class="stat-card reveal-up" style="--delay: 0.1s;">
+            <div class="stat-number-wrap">
+              <span class="stat-counter" data-target="18" data-suffix="">0</span>
+            </div>
+            <span class="stat-line" aria-hidden="true"></span>
+            <h3 class="stat-label">ORIGINAL RELEASES</h3>
+            <p class="stat-note">Studio albums, live LP sessions &amp; nocturnal EPs</p>
+          </div>
+
+          <div class="stat-card reveal-up" style="--delay: 0.2s;">
+            <div class="stat-number-wrap">
+              <span class="stat-counter" data-target="250" data-suffix="K+">0</span>
+            </div>
+            <span class="stat-line" aria-hidden="true"></span>
+            <h3 class="stat-label">LISTENS</h3>
+            <p class="stat-note">Across global streaming platforms &amp; live broadcasts</p>
+          </div>
+
+          <div class="stat-card reveal-up" style="--delay: 0.3s;">
+            <div class="stat-number-wrap">
+              <span class="stat-counter" data-target="12" data-suffix="">0</span>
+            </div>
+            <span class="stat-line" aria-hidden="true"></span>
+            <h3 class="stat-label">CITIES</h3>
+            <p class="stat-note">Touring footprint across major cultural capitals</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================
+         9. DISCOGRAPHY / BEST ALBUMS ("THE SOUND ARCHIVE")
+    =================================================== -->
+    <section class="albums-section section-padding" id="albums" aria-labelledby="albums-heading">
+      <div class="container">
+        <div class="section-header-split reveal-up">
+          <div>
+            <span class="section-label">DISCOGRAPHY</span>
+            <h2 class="section-title" id="albums-heading">THE SOUND ARCHIVE</h2>
+          </div>
+          <p class="section-subtitle">
+            Selected releases from the band's journey. Press play on any release to cue its lead recording in the studio player below.
+          </p>
+        </div>
+
+        <!-- 6 Album Cards dynamically generated by js/music.js -->
+        <div class="albums-grid" id="albumsGrid"></div>
+
+        <div class="section-bottom-cta reveal-up">
+          <a href="https://www.youtube.com/@mainak311" target="_blank" rel="noopener noreferrer" class="btn btn-outline magnetic-btn">
+            <span>VIEW ALL ON YOUTUBE &nearr;</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================
+         10. FEATURED MUSIC PLAYER (CUSTOM YOUTUBE STUDIO DECK + PLAYLIST)
+    =================================================== -->
+    <section class="music-player-section section-padding" id="music" aria-labelledby="player-heading">
+      <div class="container">
+        <div class="section-header-center reveal-up">
+          <span class="section-label">LISTENING ROOM</span>
+          <h2 class="section-title" id="player-heading">FEATURED MUSIC</h2>
+          <p class="section-subtitle">Stream official YouTube performances and master recordings directly in our studio console.</p>
+        </div>
+
+        <div class="player-console reveal-up">
+          <!-- LEFT: Now Playing Deck -->
+          <div class="player-now-playing">
+            <div class="player-artwork-stage" id="playerArtworkStage">
+              <div class="vinyl-disc" id="playerVinyl" aria-hidden="true">
+                <div class="vinyl-grooves"></div>
+                <div class="vinyl-label">N/06</div>
+              </div>
+
+              <!-- Embedded YouTube Video + Thumbnail Cover Stage -->
+              <div class="player-video-frame" id="playerVideoFrame">
+                <div id="ytPlayerMount" class="yt-player-mount"></div>
+                <img
+                  src="https://i.ytimg.com/vi/0NZubfddbtY/hqdefault.jpg"
+                  alt="Tomaro Ashime — Mainak Paladhi YouTube Thumbnail"
+                  class="player-cover-img"
+                  id="playerArtwork"
+                  loading="lazy"
+                  width="480"
+                  height="360"
+                >
+                <button
+                  type="button"
+                  class="player-cover-play-overlay"
+                  id="playerCoverPlayOverlay"
+                  aria-label="Play YouTube video in console"
+                  data-cursor="play"
+                >
+                  <span class="cover-play-circle">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"></polygon></svg>
+                  </span>
+                </button>
+              </div>
+            </div>
+
+            <div class="player-track-meta">
+              <div class="player-badge-row">
+                <span class="player-status-pill" id="playerStatusPill">READY TO PLAY</span>
+                <span class="player-album-tag" id="playerAlbumName">RABINDRASANGEET &bull; YOUTUBE</span>
+                <a
+                  href="https://youtu.be/0NZubfddbtY?si=f-R5aglmQ3InealW"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="player-yt-direct-link"
+                  id="playerYoutubeLink"
+                >
+                  YOUTUBE &nearr;
+                </a>
+              </div>
+              <h3 class="player-track-title" id="playerTrackTitle">Tomaro Ashime (তোমার অসীমে)</h3>
+              <p class="player-track-artist" id="playerTrackArtist">MAINAK PALADHI &bull; Feat. Abir Bose &amp; Sumanta Saha</p>
+            </div>
+
+            <!-- Decorative Animated Music Waveform -->
+            <div class="player-waveform" id="playerWaveform" aria-hidden="true">
+              <span></span><span></span><span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+
+            <!-- Progress Scrub Bar -->
+            <div class="player-progress-area">
+              <span class="player-time" id="playerCurrentTime">0:00</span>
+              <div class="player-progress-wrap">
+                <input
+                  type="range"
+                  id="playerSeek"
+                  class="player-seek-slider"
+                  min="0"
+                  max="100"
+                  value="0"
+                  step="0.1"
+                  aria-label="Seek audio position"
+                >
+                <div class="player-seek-fill" id="playerSeekFill"></div>
+              </div>
+              <span class="player-time" id="playerDuration">0:24</span>
+            </div>
+
+            <!-- Primary Transport Controls + Volume -->
+            <div class="player-controls-row">
+              <div class="player-transport">
+                <button type="button" class="player-icon-btn" id="playerPrevBtn" aria-label="Previous Track">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><polygon points="19 20 9 12 19 4 19 20"></polygon><line x1="5" y1="19" x2="5" y2="5" stroke="currentColor" stroke-width="2"></line></svg>
+                </button>
+
+                <button type="button" class="player-play-btn" id="playerPlayBtn" aria-label="Play or Pause Track" data-cursor="play">
+                  <svg class="icon-play" viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"></polygon></svg>
+                  <svg class="icon-pause" viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+                </button>
+
+                <button type="button" class="player-icon-btn" id="playerNextBtn" aria-label="Next Track">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><polygon points="5 4 15 12 5 20 5 4"></polygon><line x1="19" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="2"></line></svg>
+                </button>
+              </div>
+
+              <div class="player-volume-box">
+                <button type="button" class="player-icon-btn" id="playerMuteBtn" aria-label="Mute or Unmute Audio">
+                  <svg class="vol-on-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
+                </button>
+                <input
+                  type="range"
+                  id="playerVolume"
+                  class="player-volume-slider"
+                  min="0"
+                  max="1"
+                  step="0.02"
+                  value="0.85"
+                  aria-label="Audio volume"
+                >
+              </div>
+            </div>
+
+            <!-- Native HTML5 Audio Element (controlled via js/music.js) -->
+            <audio id="audioElement" preload="metadata" src="assets/audio/track-1.mp3"></audio>
+          </div>
+
+          <!-- RIGHT: 6-Song Interactive Playlist -->
+          <div class="player-playlist-panel">
+            <div class="playlist-header">
+              <span>STUDIO MASTER PLAYLIST</span>
+              <span class="playlist-count">06 TRACKS</span>
+            </div>
+            <ul class="playlist-list" id="playlistContainer" role="listbox" aria-label="Track Playlist">
+              <!-- Dynamically generated by js/music.js -->
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================
+         11. CONCERTS / EVENTS SECTION ("UPCOMING SHOWS")
+    =================================================== -->
+    <section class="concerts-section section-padding" id="concerts" aria-labelledby="concerts-heading">
+      <div class="container">
+        <div class="section-header-split reveal-up">
+          <div>
+            <span class="section-label">TOUR &amp; APPEARANCES</span>
+            <h2 class="section-title" id="concerts-heading">UPCOMING SHOWS</h2>
+          </div>
+
+          <!-- Interactive Event Filter Tabs: ALL / UPCOMING / PAST -->
+          <div class="filter-tabs" id="concertFilterTabs" role="tablist" aria-label="Filter concerts by status">
+            <button type="button" class="filter-tab active" data-event-filter="all" role="tab" aria-selected="true">ALL</button>
+            <button type="button" class="filter-tab" data-event-filter="upcoming" role="tab" aria-selected="false">UPCOMING</button>
+            <button type="button" class="filter-tab" data-event-filter="past" role="tab" aria-selected="false">PAST</button>
+          </div>
+        </div>
+
+        <!-- Concert Event List dynamically generated by js/booking.js -->
+        <div class="events-list" id="eventsContainer" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- ==================================================
+         12. BOOK NOW / EVENT BOOKING BANNER
+    =================================================== -->
+    <section class="booking-banner-section" id="hire" aria-labelledby="hire-heading">
+      <div class="container">
+        <div class="booking-banner-card reveal-up">
+          <div class="booking-banner-copy">
+            <span class="section-label">EXCLUSIVE LIVE BOOKINGS</span>
+            <h2 class="section-title" id="hire-heading">BRING THE SOUND TO YOUR STAGE</h2>
+            <p class="booking-banner-text">
+              For concerts, private events, festivals, corporate performances and special appearances. Full technical rider and bespoke setlist curation available worldwide.
+            </p>
+          </div>
+
+          <div class="booking-banner-actions">
+            <button type="button" class="btn btn-primary magnetic-btn" data-open-booking="Direct Stage Booking">
+              <span>BOOK THE BAND</span>
+            </button>
+
+            <!-- REPLACE WITH REAL WHATSAPP NUMBER -->
+            <a
+              href="https://wa.me/919999999999?text=Hello%20MAINAKER%20DOLBOL%20Management%2C%20I%20would%20like%20to%20inquire%20about%20booking%20the%20band."
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-whatsapp magnetic-btn"
+            >
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+              <span>WHATSAPP US</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================
+         13. CONCERTS GLIMPSE (LOCAL CONCERT VIDEOS SHOWCASE)
+    =================================================== -->
+    <section class="videos-section section-padding" id="videos" aria-labelledby="videos-heading">
+      <div class="container">
+        <div class="section-header-split reveal-up">
+          <div>
+            <span class="section-label">LIVE STAGE ARCHIVE</span>
+            <h2 class="section-title" id="videos-heading">CONCERTS GLIMPSE</h2>
+          </div>
+          <p class="section-subtitle">
+            Raw stage energy, crowd moments, and unforgettable live concert glimpses of MAINAKER DOLBOL.
+          </p>
+        </div>
+
+        <!-- 6 Local Concert Video Cards dynamically generated by js/gallery.js -->
+        <div class="videos-grid" id="videosGrid"></div>
+      </div>
+    </section>
+
+    <!-- ==================================================
+         14. PHOTO GALLERY (CINEMATIC MASONRY + LIGHTBOX)
+    =================================================== -->
+    <section class="gallery-section section-padding" id="gallery" aria-labelledby="gallery-heading">
+      <div class="container">
+        <div class="section-header-split reveal-up">
+          <div>
+            <span class="section-label">VISUAL ARCHIVE</span>
+            <h2 class="section-title" id="gallery-heading">PHOTO GALLERY</h2>
+          </div>
+
+          <!-- Gallery Category Filters -->
+          <div class="filter-tabs gallery-filter-tabs" id="galleryFilterTabs" role="tablist" aria-label="Filter gallery photos by category">
+            <button type="button" class="filter-tab active" data-gallery-filter="ALL" role="tab" aria-selected="true">ALL</button>
+            <button type="button" class="filter-tab" data-gallery-filter="LIVE" role="tab" aria-selected="false">LIVE</button>
+            <button type="button" class="filter-tab" data-gallery-filter="BACKSTAGE" role="tab" aria-selected="false">BACKSTAGE</button>
+            <!--button type="button" class="filter-tab" data-gallery-filter="STUDIO" role="tab" aria-selected="false">STUDIO</button-->
+            <button type="button" class="filter-tab" data-gallery-filter="PORTRAITS" role="tab" aria-selected="false">PORTRAITS</button>
+          </div>
+        </div>
+
+        <!-- Masonry Gallery Grid (15 items) dynamically generated by js/gallery.js -->
+        <div class="gallery-masonry" id="galleryGrid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- ==================================================
+         15. PRESS / TESTIMONIAL SECTION ("HEARD AROUND")
+    =================================================== -->
+    <section class="press-section section-padding" id="press" aria-labelledby="press-heading">
+      <div class="container">
+        <div class="section-header-center reveal-up">
+          <span class="section-label">CRITICAL ACCLAIM</span>
+          <h2 class="section-title" id="press-heading">HEARD AROUND</h2>
+        </div>
+
+        <div class="press-grid">
+          <blockquote class="press-card reveal-up" style="--delay: 0s;">
+            <span class="quote-mark" aria-hidden="true">&ldquo;</span>
+            <p class="press-quote">
+              &ldquo;An electrifying live act with an unmistakable visual identity.&rdquo;
+            </p>
+            <footer class="press-source">
+              <strong>ROLLING SOUND MAGAZINE</strong>
+              <span>LIVE CONCERT REVIEW &bull; 2026</span>
+            </footer>
+          </blockquote>
+
+          <blockquote class="press-card featured-press-card reveal-up" style="--delay: 0.12s;">
+            <span class="quote-mark" aria-hidden="true">&ldquo;</span>
+            <p class="press-quote">
+              &ldquo;Six musicians, one remarkable stage presence.&rdquo;
+            </p>
+            <footer class="press-source">
+              <strong>NOCTURNE CULTURE JOURNAL</strong>
+              <span>COVER FEATURE &bull; 2026</span>
+            </footer>
+          </blockquote>
+
+          <blockquote class="press-card reveal-up" style="--delay: 0.24s;">
+            <span class="quote-mark" aria-hidden="true">&ldquo;</span>
+            <p class="press-quote">
+              &ldquo;A performance that stays with you long after the final note.&rdquo;
+            </p>
+            <footer class="press-source">
+              <strong>THE SONIC TELEGRAPH</strong>
+              <span>FESTIVAL HEADLINE REPORT &bull; 2025</span>
+            </footer>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    
+    <!-- ==================================================
+         17. FINAL BOOKING CTA (FULL-WIDTH CINEMATIC CONCERT CTA)
+    =================================================== -->
+    <section class="final-cta-section" id="contact" aria-labelledby="final-cta-heading">
+      <div class="final-cta-bg-wrap" aria-hidden="true">
+        <!-- REPLACE FINAL CTA CONCERT PHOTOGRAPH -->
+        <img src="assets/images/cta-bg.jpg" alt="" class="final-cta-bg-img" loading="lazy" width="1920" height="1080">
+        <div class="final-cta-overlay"></div>
+      </div>
+
+      <div class="container final-cta-container reveal-up">
+        <!-- Floating Decorative Music Waveform -->
+        <div class="cta-waveform" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+
+        <span class="section-label">WORLDWIDE BOOKINGS &amp; MANAGEMENT</span>
+        <h2 class="final-cta-title" id="final-cta-heading">
+          READY TO MAKE<br>
+          <span>SOME NOISE?</span>
+        </h2>
+        <p class="final-cta-subtitle">
+          Let's create a performance people remember.
+        </p>
+
+        <div class="final-cta-buttons">
+          <button type="button" class="btn btn-primary btn-lg magnetic-btn" data-open-booking="Final CTA Booking">
+            <span>BOOK THE BAND</span>
+          </button>
+
+          <!-- REPLACE WITH REAL WHATSAPP NUMBER -->
+          <a
+            href="https://wa.me/919999999999?text=Hello%20MAINAKER%20DOLBOL%2C%20we%20want%20to%20book%20the%20band%20for%20an%20upcoming%20event."
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-outline btn-lg magnetic-btn"
+          >
+            <span>WHATSAPP US</span>
+          </a>
+        </div>
+
+        <!-- Direct Contact Strip -->
+        <div class="direct-contact-strip">
+          <div class="contact-strip-item">
+            <span class="contact-strip-label">FULL BAND MANAGER</span>
+            <span class="contact-strip-value">SUBHA CHATTERJEE</span>
+          </div>
+          <div class="contact-strip-item">
+            <span class="contact-strip-label">MANAGEMENT HOTLINE</span>
+            <!-- REPLACE WITH REAL PHONE -->
+            <a href="tel:+919999999999" class="contact-strip-value">+91 99999 99999</a>
+          </div>
+          <div class="contact-strip-item">
+            <span class="contact-strip-label">HOME BASE</span>
+            <span class="contact-strip-value">KOLKATA, INDIA &bull; WORLDWIDE</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================================================
+       18. FOOTER
+  =================================================== -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-top-grid">
+        <!-- Brand Column -->
+        <div class="footer-brand-col">
+          <!-- BAND LOGO -->
+          <a href="#home" class="brand-logo footer-logo" aria-label="Mainaker Dol Bol Home">
+            <img src="assets/gallery/logo.png" alt="Mainaker Dol Bol — Folk Band" class="footer-logo-img" loading="lazy" width="190" height="95">
+          </a>
+          <p class="footer-desc">
+            Six artists. One sound. A luxury music collective and live concert experience crafted around rhythm, cinematic atmosphere, and raw human emotion.
+          </p>
+          <div class="footer-socials">
+            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">IG</a>
+            <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" aria-label="YouTube">YT</a>
+            <a href="https://open.spotify.com/" target="_blank" rel="noopener noreferrer" aria-label="Spotify">SP</a>
+            <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">FB</a>
+          </div>
+        </div>
+
+        <!-- Navigation Column -->
+        <div class="footer-links-col">
+          <h3 class="footer-col-title">NAVIGATION</h3>
+          <ul class="footer-nav-list">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#artists">Artists</a></li>
+            <li><a href="#music">Music</a></li>
+            <li><a href="#albums">Albums</a></li>
+            <li><a href="#concerts">Concerts</a></li>
+            <li><a href="#videos">Videos</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact Column -->
+        <div class="footer-contact-col">
+          <h3 class="footer-col-title">CONTACT</h3>
+          <ul class="footer-contact-list">
+            <li>
+              <span>Full Band Manager:</span>
+              <span>Subha Chatterjee</span>
+            </li>
+            <li>
+              <span>Email:</span>
+              <!-- REPLACE WITH REAL EMAIL -->
+              <a href="mailto:BOOKING@BANDNAME.COM">BOOKING@BANDNAME.COM</a>
+            </li>
+            <li>
+              <span>Phone:</span>
+              <!-- REPLACE WITH REAL PHONE -->
+              <a href="tel:+919999999999">+91 99999 99999</a>
+            </li>
+            <li>
+              <span>Location:</span>
+              <span>Kolkata, India</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Booking Direct Column -->
+        <div class="footer-booking-col">
+          <h3 class="footer-col-title">DIRECT BOOKING</h3>
+          <p class="footer-booking-note">Available for headline festivals, private luxury galas, university arenas, and international touring.</p>
+          <a href="mailto:BOOKING@BANDNAME.COM" class="footer-booking-email">BOOKING@BANDNAME.COM</a>
+          <button type="button" class="btn btn-primary btn-sm" data-open-booking="Footer Booking CTA">
+            OPEN BOOKING FORM
+          </button>
+        </div>
+      </div>
+
+      <div class="footer-bottom-bar">
+        <!-- REPLACE BAND NAME IN COPYRIGHT -->
+        <p class="copyright-text">&copy; 2026 MAINAKER DOLBOL (BAND NAME). ALL RIGHTS RESERVED.</p>
+        <div class="footer-legal-links">
+          <a href="#privacy" data-legal-modal="privacy">Privacy Policy</a>
+          <a href="#terms" data-legal-modal="terms">Terms &amp; Conditions</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================================================
+       MODALS (NATIVE <dialog closedby="any"> + FALLBACKS)
+  =================================================== -->
+
+  <!-- 1. VIDEO MODAL (Local MP4 Player) -->
+  <dialog class="modal-dialog video-modal" id="videoModal" closedby="any" aria-labelledby="videoModalTitle">
+    <div class="modal-inner video-modal-inner">
+      <div class="modal-header">
+        <span class="modal-eyebrow" id="videoModalTitle">LIVE CONCERT GLIMPSE</span>
+        <button type="button" class="modal-close-btn" data-close-modal="videoModal" aria-label="Close video modal">
+          <span>ESC</span> &times;
+        </button>
+      </div>
+      <div class="video-embed-container">
+        <video
+          id="localVideoPlayer"
+          class="local-modal-video"
+          controls
+          playsinline
+          preload="metadata"
+        ></video>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- 2. ARTIST DETAIL MODAL -->
+  <dialog class="modal-dialog artist-modal" id="artistModal" closedby="any" aria-labelledby="artistModalName">
+    <div class="modal-inner artist-modal-inner" id="artistModalContent">
+      <!-- Populated dynamically by js/artists.js -->
+    </div>
+  </dialog>
+
+  <!-- 3. BOOKING MODAL (Interactive Validated Form) -->
+  <dialog class="modal-dialog booking-modal" id="bookingModal" closedby="any" aria-labelledby="bookingModalHeading">
+    <div class="modal-inner booking-modal-inner">
+      <div class="modal-header">
+        <div>
+          <span class="section-label">OFFICIAL BOOKING DESK</span>
+          <h2 class="modal-title" id="bookingModalHeading">BOOK MAINAKER DOLBOL</h2>
+        </div>
+        <button type="button" class="modal-close-btn" data-close-modal="bookingModal" aria-label="Close booking form">
+          <span>ESC</span> &times;
+        </button>
+      </div>
+
+      <form id="bookingForm" class="booking-form" novalidate>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="bookName">Full Name <span class="req">*</span></label>
+            <input type="text" id="bookName" name="fullName" placeholder="e.g. Vikram Malhotra" required autocomplete="name">
+            <span class="form-error" id="err-bookName" role="alert"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="bookEmail">Email Address <span class="req">*</span></label>
+            <input type="email" id="bookEmail" name="email" placeholder="name@company.com" required autocomplete="email">
+            <span class="form-error" id="err-bookEmail" role="alert"></span>
+          </div>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="bookPhone">Phone / WhatsApp <span class="req">*</span></label>
+            <input type="tel" id="bookPhone" name="phone" placeholder="+91 98765 43210" required autocomplete="tel">
+            <span class="form-error" id="err-bookPhone" role="alert"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="bookEventType">Event Type <span class="req">*</span></label>
+            <select id="bookEventType" name="eventType" required>
+              <option value="">Select event category...</option>
+              <option value="Concert / Music Festival">Concert / Music Festival</option>
+              <option value="Corporate Gala / Brand Launch">Corporate Gala / Brand Launch</option>
+              <option value="Private Luxury Celebration">Private Luxury Celebration</option>
+              <option value="University / Arena Headline">University / Arena Headline</option>
+              <option value="Club / Acoustic Session">Club / Acoustic Session</option>
+            </select>
+            <span class="form-error" id="err-bookEventType" role="alert"></span>
+          </div>
+        </div>
+
+        <div class="form-row-3">
+          <div class="form-group">
+            <label for="bookDate">Event Date <span class="req">*</span></label>
+            <input type="date" id="bookDate" name="eventDate" required>
+            <span class="form-error" id="err-bookDate" role="alert"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="bookLocation">City / Venue <span class="req">*</span></label>
+            <input type="text" id="bookLocation" name="location" placeholder="e.g. Kolkata, The Grand Arena" required>
+            <span class="form-error" id="err-bookLocation" role="alert"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="bookAudience">Expected Audience <span class="req">*</span></label>
+            <select id="bookAudience" name="audience" required>
+              <option value="">Estimated guests...</option>
+              <option value="Under 300 (Intimate)">Under 300 (Intimate)</option>
+              <option value="300 – 1,000">300 – 1,000</option>
+              <option value="1,000 – 5,000">1,000 – 5,000</option>
+              <option value="5,000+ (Arena / Festival)">5,000+ (Arena / Festival)</option>
+            </select>
+            <span class="form-error" id="err-bookAudience" role="alert"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="bookMessage">Performance Details &amp; Message <span class="req">*</span></label>
+          <textarea id="bookMessage" name="message" rows="3" placeholder="Tell us about your event schedule, stage production requirements, or specific songs..." required></textarea>
+          <span class="form-error" id="err-bookMessage" role="alert"></span>
+        </div>
+
+        <div class="booking-form-actions">
+          <button type="submit" class="btn btn-primary" id="bookingSubmitBtn">
+            <span>SEND BOOKING REQUEST</span>
+          </button>
+
+          <!-- REPLACE WITH REAL WHATSAPP NUMBER -->
+          <button type="button" class="btn btn-whatsapp" id="bookingWhatsappBtn">
+            <span>CONTACT VIA WHATSAPP</span>
+          </button>
+        </div>
+
+        <!-- Animated Success State -->
+        <div class="booking-success-box" id="bookingSuccessBox" aria-live="polite" hidden>
+          <div class="success-check-icon" aria-hidden="true">&#10003;</div>
+          <h3>BOOKING INQUIRY RECEIVED</h3>
+          <p id="bookingSuccessText">Thank you. Our tour &amp; booking management team will respond within 12 hours.</p>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- 4. PHOTO GALLERY LIGHTBOX MODAL -->
+  <dialog class="modal-dialog lightbox-modal" id="lightboxModal" closedby="any" aria-label="Fullscreen Photo Lightbox">
+    <div class="lightbox-inner">
+      <div class="lightbox-top-bar">
+        <span class="lightbox-counter" id="lightboxCounter">01 / 15</span>
+        <span class="lightbox-category-badge" id="lightboxCategory">LIVE</span>
+        <button type="button" class="modal-close-btn" data-close-modal="lightboxModal" aria-label="Close lightbox">
+          <span>ESC</span> &times;
+        </button>
+      </div>
+
+      <div class="lightbox-stage">
+        <button type="button" class="lightbox-nav-btn prev" id="lightboxPrev" aria-label="Previous image">
+          &#8592;
+        </button>
+
+        <figure class="lightbox-figure">
+          <img src="assets/gallery/gallery-1.jpg" alt="" id="lightboxImage" class="lightbox-img">
+          <figcaption class="lightbox-caption" id="lightboxCaption"></figcaption>
+        </figure>
+
+        <button type="button" class="lightbox-nav-btn next" id="lightboxNext" aria-label="Next image">
+          &#8594;
+        </button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- ==================================================
+       JAVASCRIPT FILES (MODULAR ARCHITECTURE)
+  =================================================== -->
+  <script src="js/artists.js" defer></script>
+  <script src="js/music.js" defer></script>
+  <script src="js/gallery.js" defer></script>
+  <script src="js/booking.js" defer></script>
+  <script src="js/main.js" defer></script>
+</body>
+</html>
+
