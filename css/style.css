@@ -4720,27 +4720,12 @@ body.is-admin-authenticated .admin-card-delete-btn {
   transform: scale(1.06);
 }
 
-/* Footer Admin Trigger */
-.footer-admin-trigger {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.32rem 0.75rem;
-  border: 1px solid var(--border-subtle);
-  border-radius: 99px;
-  background: rgba(20, 22, 27, 0.8);
-  color: var(--text-muted);
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  letter-spacing: 0.14em;
-  transition: all 0.3s ease;
-}
-
-.footer-admin-trigger:hover,
-body.is-admin-authenticated .footer-admin-trigger {
-  color: var(--accent-gold);
-  border-color: rgba(212, 175, 55, 0.5);
-  background: rgba(212, 175, 55, 0.1);
+/* Manager Mode Controls — Hidden for now */
+.footer-admin-trigger,
+.admin-floating-bar,
+.admin-only-btn,
+.admin-card-delete-btn {
+  display: none !important;
 }
 
 /* Floating Admin Command Bar */

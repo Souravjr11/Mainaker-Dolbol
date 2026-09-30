@@ -1137,6 +1137,16 @@ async function initAdminPortal() {
       openAdminModal("photos");
     }
   });
+
+  // Secret URL hash trigger: #admin or #manager
+  const checkAdminHash = () => {
+    const hash = window.location.hash.toLowerCase();
+    if (hash === "#admin" || hash === "#manager") {
+      setTimeout(() => openAdminModal("photos"), 300);
+    }
+  };
+  checkAdminHash();
+  window.addEventListener("hashchange", checkAdminHash);
 }
 
 if (document.readyState === "loading") {
