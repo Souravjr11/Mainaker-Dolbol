@@ -22,6 +22,7 @@ const artists = [
     featuredPerformance: "Kolkata Press Club Unveiling & Live Concert Stage",
     album: "Bhitor Bahire (ভিতর বাহিরে)",
     youtube: "assets/videos/1.mp4",
+    facebook: "https://www.facebook.com/share/1DDwKqPQd1/",
     instagram: "https://www.instagram.com/mainakpaladhi?utm_source=ig_web_button_share_sheet&stkn=ZDNlZDc0MzIxNw==",
   },
   {
@@ -39,7 +40,7 @@ const artists = [
     featuredPerformance: "Live Concert Stage — Classical & Folk Rhythm Showcase",
     album: "Bhitor Bahire Live",
     facebook: "https://www.facebook.com/share/1Fk47RaGLA/",
-  
+    instagram: "https://www.instagram.com/talukder.tuhin?stkn=a3A1b3E4dGg4bTJx",
   },
   {
     id: 3,
@@ -55,7 +56,7 @@ const artists = [
     instrument: "Electric & Acoustic Lead Guitars",
     featuredPerformance: "Live Concert Set — Folk-Rock Extended Guitar Solo",
     album: "Mainaker Dolbol Live",
-
+    facebook: "https://www.facebook.com/share/1DvyVG1iHe/",
   },
   {
     id: 4,
@@ -71,7 +72,7 @@ const artists = [
     instrument: "Roland Octopad & Electronic Percussion",
     featuredPerformance: "Live Stage Session — Octopad & Folk Rhythm Groove",
     album: "Mainaker Dolbol Sessions",
-   
+    facebook: "https://www.facebook.com/share/1BpKS4hrJt/",
   },
   {
     id: 5,
@@ -87,7 +88,8 @@ const artists = [
     instrument: "Keyboards, Piano & Synthesizer Arrangements",
     featuredPerformance: "Live Concert — Solo Keyboard & Folk Prelude",
     album: "Mainaker Dolbol Live",
-    
+    facebook: "https://www.facebook.com/share/1CL1S2UKjy/",
+    instagram: "https://www.instagram.com/udayan811?stkn=MWJrMHp1aXpvN2ls",
   },
   {
     id: 6,
@@ -103,7 +105,8 @@ const artists = [
     instrument: "Full Band Management, Concert Production & Percussion",
     featuredPerformance: "Tour Direction & Headline Festival Production",
     album: "Mainaker Dolbol Collective",
-    
+    facebook: "https://www.facebook.com/share/1HAEX8DTk3/",
+    instagram: "https://www.instagram.com/subhochatterjee93?stkn=MWZwdWkwMGQ5YXNyeA==",
   }
 ];
 
