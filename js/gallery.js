@@ -83,6 +83,12 @@ const gallery = [
   { id: 23, src: "assets/artists/artist-vocalist-10.jpeg", title: "MAINAKER DOLBOL — Festival Tour Finale", category: "TRAVEL", span: "" }
 ];
 
+window.defaultVideosData = videos.map((v) => ({ ...v }));
+window.defaultGalleryData = gallery.map((g) => ({ ...g }));
+window.videosData = videos;
+window.galleryData = gallery;
+let currentGalleryFilter = "ALL";
+
 function formatVideoTime(seconds) {
   if (!Number.isFinite(seconds) || seconds <= 0) return "LIVE";
   const mins = Math.floor(seconds / 60);
@@ -91,7 +97,7 @@ function formatVideoTime(seconds) {
 }
 
 /**
- * Render Concerts Glimpse Grid (#videosGrid) using local MP4 files from assets/videos/
+ * Render Concerts Glimpse Grid (#videosGrid) using local or cloud MP4 files
  */
 function renderVideosGrid() {
   const grid = document.getElementById("videosGrid");
@@ -101,7 +107,7 @@ function renderVideosGrid() {
     .map(
       (video, idx) => `
       <article
-        class="video-card reveal-up"
+        class="video-card reveal-up is-visible"
         style="--delay: ${(idx % 3) * 0.1}s;"
         data-cursor="play"
         data-video-url="${video.videoSrc}"
@@ -112,7 +118,7 @@ function renderVideosGrid() {
       >
         <div class="video-thumb-wrap">
           <video
-            src="${video.videoSrc}#t=0.5"
+            src="${video.videoSrc.includes("#t=") || video.videoSrc.startsWith("data:") ? video.videoSrc : video.videoSrc + "#t=0.5"}"
             class="video-thumb-img"
             muted
             loop
@@ -121,10 +127,20 @@ function renderVideosGrid() {
           ></video>
           <div class="video-thumb-overlay">
             <span class="video-category-tag">${video.category}</span>
+            <button
+              type="button"
+              class="admin-card-delete-btn"
+              data-admin-delete-video="${video.id}"
+              title="Delete Video (Admin Only)"
+              aria-label="Delete video ${video.title}"
+            >
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path></svg>
+              <span>DELETE</span>
+            </button>
             <div class="video-card-play">
               <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"></polygon></svg>
             </div>
-            <span class="video-duration-tag" data-duration-badge>${video.duration}</span>
+            <span class="video-duration-tag" data-duration-badge>${video.duration || "LIVE"}</span>
           </div>
         </div>
 
@@ -159,6 +175,8 @@ function renderVideosGrid() {
   });
 }
 
+window.renderVideosGrid = renderVideosGrid;
+
 /**
  * Local Video Modal Controller (#videoModal)
  */
@@ -191,6 +209,7 @@ function initVideoModal() {
 
   // Delegate clicks on any element with [data-video-url]
   document.addEventListener("click", (e) => {
+    if (e.target.closest("[data-admin-delete-video]")) return;
     const trigger = e.target.closest("[data-video-url]");
     if (!trigger) return;
     e.preventDefault();
@@ -202,6 +221,7 @@ function initVideoModal() {
 
   document.addEventListener("keydown", (e) => {
     if (e.key !== "Enter" && e.key !== " ") return;
+    if (e.target.closest("[data-admin-delete-video]")) return;
     const trigger = e.target.closest("[data-video-url]");
     if (!trigger || trigger.tagName === "BUTTON") return;
     e.preventDefault();
@@ -232,7 +252,8 @@ function initPhotoGallery() {
   let activeLightboxList = [...gallery];
   let currentIndex = 0;
 
-  function renderGallery(category = "ALL") {
+  function renderGallery(category = currentGalleryFilter || "ALL") {
+    currentGalleryFilter = category;
     filteredItems =
       category === "ALL"
         ? [...gallery]
@@ -242,7 +263,7 @@ function initPhotoGallery() {
       .map(
         (item, idx) => `
         <figure
-          class="gallery-item ${item.span} is-visible"
+          class="gallery-item ${item.span || ""} is-visible"
           data-gallery-index="${idx}"
           data-cursor="view"
           tabindex="0"
@@ -256,6 +277,16 @@ function initPhotoGallery() {
             width="700"
             height="520"
           >
+          <button
+            type="button"
+            class="admin-card-delete-btn"
+            data-admin-delete-photo="${item.id}"
+            title="Delete Photo (Admin Only)"
+            aria-label="Delete photo ${item.title}"
+          >
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path></svg>
+            <span>DELETE</span>
+          </button>
           <figcaption class="gallery-item-overlay">
             <span class="gallery-item-cat">${item.category}</span>
             <h3 class="gallery-item-title">${item.title}</h3>
@@ -267,8 +298,12 @@ function initPhotoGallery() {
 
     grid.querySelectorAll(".gallery-item").forEach((el) => {
       const idx = Number(el.dataset.galleryIndex);
-      el.addEventListener("click", () => openLightbox(idx, filteredItems));
+      el.addEventListener("click", (e) => {
+        if (e.target.closest("[data-admin-delete-photo]")) return;
+        openLightbox(idx, filteredItems);
+      });
       el.addEventListener("keydown", (e) => {
+        if (e.target.closest("[data-admin-delete-photo]")) return;
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
           openLightbox(idx, filteredItems);
@@ -276,6 +311,8 @@ function initPhotoGallery() {
       });
     });
   }
+
+  window.renderPhotoGallery = renderGallery;
 
   function updateLightboxView() {
     if (!activeLightboxList.length) return;

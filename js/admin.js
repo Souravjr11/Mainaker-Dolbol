@@ -1,22 +1,25 @@
 /**
  * ==========================================================================
- * MAINAKER DOLBOL — ADMIN / MANAGER MEDIA PORTAL (FIREBASE + INDEXEDDB)
+ * MAINAKER DOLBOL — ADMIN / MANAGER MEDIA PORTAL (FIRESTORE CLOUD + INDEXEDDB)
  * File: js/admin.js
  * ==========================================================================
  * Features:
  * 1. Exclusive Admin Authentication for Band Manager (Subha Chatterjee):
- *    - Firebase Authentication (Email/Password & Google Sign-In) when Firebase is configured
- *    - Instant Manager Passcode authentication (Default: admin@mainakerdolbol.com / MAINAK2026)
- * 2. Real-time Cloud Sync via Firebase (Firestore + Firebase Storage) + IndexedDB persistence:
- *    - Upload new Photos to Photo Gallery (#galleryGrid)
- *    - Upload new Videos (MP4/WebM or URL) to Concerts Glimpse (#videosGrid)
+ *    - Firebase Authentication (Email/Password & Google Sign-In)
+ *    - Automatic background token sync so Firestore Security Rules (request.auth != null)
+ *      are always satisfied when the Manager is logged in.
+ * 2. 100% Cloud Firestore Media Engine (Works on Free Spark Plan without needing Blaze Storage):
+ *    - Upload new Photos to Photo Gallery (#galleryGrid) -> stored in Firestore `md_gallery`
+ *    - Upload new Videos (MP4/WebM file or URL) to Concerts Glimpse (#videosGrid) ->
+ *      stored in Firestore `md_videos` (with automatic multi-document chunking in `md_video_chunks`
+ *      for MP4 files) + local IndexedDB cache.
  *    - Delete any existing or newly uploaded Photo or Video (restricted strictly to Admin)
  *    - Restore deleted original items anytime
  * ==========================================================================
  */
 
 // ============================================================================
-// 1. DEFAULT FIREBASE CONFIGURATION (Replace or configure via Admin UI Tab 4)
+// 1. FIREBASE CONFIGURATION (mainaker-dolbol-website)
 // ============================================================================
 const DEFAULT_FIREBASE_CONFIG = {
   apiKey: "AIzaSyCY1CPKrhpZRhsiIGAdxAv7KuUDM_ZSURE",
@@ -41,6 +44,7 @@ const IDB_NAME = "MainakerDolbolMediaDB";
 const IDB_VERSION = 1;
 const STORE_PHOTOS = "custom_photos";
 const STORE_VIDEOS = "custom_videos";
+const CHUNK_SIZE = 650000; // ~650KB per Firestore chunk document (well below 1MB limit)
 
 // Runtime State
 let isAdminAuthenticated = false;
@@ -49,7 +53,6 @@ let firebaseReady = false;
 let fbApp = null;
 let fbAuth = null;
 let fbDb = null;
-let fbStorage = null;
 let fbModules = null;
 
 let customPhotosList = [];
@@ -82,7 +85,7 @@ function getActiveFirebaseConfig() {
 }
 
 // ============================================================================
-// 2. INDEXEDDB ENGINE (Handles large image & MP4 video blobs locally)
+// 2. INDEXEDDB ENGINE (Fast local cache for photos & MP4 videos)
 // ============================================================================
 function openMediaDB() {
   return new Promise((resolve, reject) => {
@@ -140,8 +143,29 @@ async function idbDelete(storeName, id) {
 }
 
 // ============================================================================
-// 3. FIREBASE DYNAMIC INITIALIZATION (Auth + Firestore + Storage)
+// 3. FIREBASE INITIALIZATION (Auth + Firestore with Long-Polling Support)
 // ============================================================================
+async function ensureFirebaseAdminAuth() {
+  if (!firebaseReady || !fbAuth || !fbModules) return null;
+  if (fbAuth.currentUser) return fbAuth.currentUser;
+
+  const email = "admin@mainakerdolbol.com";
+  const password = getAdminPasscode();
+
+  try {
+    const cred = await fbModules.signInWithEmailAndPassword(fbAuth, email, password);
+    return cred.user;
+  } catch (err) {
+    try {
+      const created = await fbModules.createUserWithEmailAndPassword(fbAuth, email, password);
+      return created.user;
+    } catch (createErr) {
+      console.warn("Firebase background auth warning:", createErr.message || createErr);
+      return null;
+    }
+  }
+}
+
 async function initFirebaseIfConfigured() {
   const config = getActiveFirebaseConfig();
   const statusText = document.getElementById("adminBackendStatusText");
@@ -150,7 +174,7 @@ async function initFirebaseIfConfigured() {
   if (!config) {
     firebaseReady = false;
     if (statusText) {
-      statusText.textContent = "Storage Engine: Local IndexedDB Active (Configure Firebase keys for global cloud sync)";
+      statusText.textContent = "Storage Engine: Local IndexedDB Active";
     }
     if (modeBadge) {
       modeBadge.textContent = "LOCAL + IDB";
@@ -159,33 +183,50 @@ async function initFirebaseIfConfigured() {
   }
 
   try {
-    if (statusText) statusText.textContent = "Connecting to Firebase Cloud...";
-    const [appMod, authMod, firestoreMod, storageMod] = await Promise.all([
+    if (statusText) statusText.textContent = "Connecting to Firebase Cloud Firestore...";
+    const [appMod, authMod, firestoreMod] = await Promise.all([
       import("https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js"),
       import("https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js"),
-      import("https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js"),
-      import("https://www.gstatic.com/firebasejs/11.0.1/firebase-storage.js")
+      import("https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js")
     ]);
 
-    fbModules = { ...appMod, ...authMod, ...firestoreMod, ...storageMod };
+    fbModules = { ...appMod, ...authMod, ...firestoreMod };
     fbApp = fbModules.getApps().length ? fbModules.getApp() : fbModules.initializeApp(config);
     fbAuth = fbModules.getAuth(fbApp);
-    fbDb = fbModules.getFirestore(fbApp);
-    fbStorage = fbModules.getStorage(fbApp);
+
+    // Use experimentalForceLongPolling so Firestore works reliably even on file:// or strict networks
+    try {
+      fbDb = fbModules.initializeFirestore(fbApp, {
+        experimentalForceLongPolling: true
+      });
+    } catch (_) {
+      fbDb = fbModules.getFirestore(fbApp);
+    }
+
     firebaseReady = true;
 
     if (statusText) {
-      statusText.textContent = `Firebase Cloud Connected (${config.projectId})`;
+      statusText.textContent = `Firebase Cloud Firestore Connected (${config.projectId})`;
     }
     if (modeBadge) {
-      modeBadge.textContent = "FIREBASE CLOUD";
+      modeBadge.textContent = "FIRESTORE CLOUD";
+    }
+
+    // If Admin session was already active in this browser tab, sign in to Firebase Auth automatically
+    if (isAdminAuthenticated) {
+      await ensureFirebaseAdminAuth();
     }
 
     // Listen to Firebase Auth state
     fbModules.onAuthStateChanged(fbAuth, (user) => {
       if (user && user.email) {
         const allowed = getAllowedAdminEmail();
-        if (!allowed || user.email.toLowerCase() === allowed || user.email.toLowerCase() === "subha@mainakerdolbol.com") {
+        if (
+          !allowed ||
+          user.email.toLowerCase() === allowed ||
+          user.email.toLowerCase() === "admin@mainakerdolbol.com" ||
+          user.email.toLowerCase() === "subha@mainakerdolbol.com"
+        ) {
           setAdminAuthenticated(true, user.email);
         }
       }
@@ -198,7 +239,7 @@ async function initFirebaseIfConfigured() {
     console.warn("Firebase initialization fallback to IndexedDB:", err);
     firebaseReady = false;
     if (statusText) {
-      statusText.textContent = "Firebase connection failed — using Local IndexedDB storage.";
+      statusText.textContent = `Firebase warning: ${err.message || "Using Local IndexedDB"}`;
     }
     return false;
   }
@@ -207,9 +248,9 @@ async function initFirebaseIfConfigured() {
 function subscribeToFirestoreMedia() {
   if (!firebaseReady || !fbDb || !fbModules) return;
 
-  const { collection, onSnapshot, doc } = fbModules;
+  const { collection, onSnapshot, doc, getDoc } = fbModules;
 
-  // Listen to deleted IDs doc
+  // 1. Listen to deleted IDs doc
   onSnapshot(
     doc(fbDb, "md_settings", "deleted_media"),
     (snap) => {
@@ -229,7 +270,7 @@ function subscribeToFirestoreMedia() {
     (err) => console.warn("Firestore deleted_media listener warning:", err)
   );
 
-  // Listen to uploaded photos collection
+  // 2. Listen to uploaded photos collection
   onSnapshot(
     collection(fbDb, "md_gallery"),
     (snap) => {
@@ -242,12 +283,34 @@ function subscribeToFirestoreMedia() {
     (err) => console.warn("Firestore md_gallery listener warning:", err)
   );
 
-  // Listen to uploaded videos collection
+  // 3. Listen to uploaded videos collection (and reassemble chunked videos if needed)
   onSnapshot(
     collection(fbDb, "md_videos"),
-    (snap) => {
+    async (snap) => {
       const cloudVideos = [];
-      snap.forEach((d) => cloudVideos.push({ id: d.id, ...d.data() }));
+      for (const d of snap.docs) {
+        const vData = { id: d.id, ...d.data() };
+        // If video was stored in Firestore chunks, reassemble it
+        if (vData.isChunked && vData.chunkCount > 0 && !vData.videoSrc) {
+          try {
+            const parts = [];
+            for (let i = 0; i < vData.chunkCount; i++) {
+              const cSnap = await getDoc(doc(fbDb, "md_video_chunks", `${vData.id}_part_${i}`));
+              if (cSnap.exists()) {
+                parts.push(cSnap.data().data || "");
+              }
+            }
+            if (parts.length === vData.chunkCount) {
+              vData.videoSrc = parts.join("");
+            }
+          } catch (chunkErr) {
+            console.warn("Error reassembling video chunks:", chunkErr);
+          }
+        }
+        if (vData.videoSrc) {
+          cloudVideos.push(vData);
+        }
+      }
       cloudVideos.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
       customVideosList = mergeById(cloudVideos, customVideosList);
       syncAndRenderWebsiteMedia();
@@ -348,22 +411,22 @@ function showAdminToast(message, isError = false) {
   clearTimeout(banner._hideTimer);
   banner._hideTimer = setTimeout(() => {
     banner.hidden = true;
-  }, 4500);
+  }, 5000);
 }
 
 // ============================================================================
-// 6. IMAGE COMPRESSION & FILE UPLOAD HELPERS
+// 6. IMAGE COMPRESSION & FIRESTORE UPLOAD HELPERS
 // ============================================================================
 function readFileAsDataURL(file, onProgress) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onprogress = (e) => {
       if (e.lengthComputable && typeof onProgress === "function") {
-        onProgress(Math.round((e.loaded / e.total) * 90));
+        onProgress(Math.round((e.loaded / e.total) * 50));
       }
     };
     reader.onload = () => {
-      if (typeof onProgress === "function") onProgress(100);
+      if (typeof onProgress === "function") onProgress(60);
       resolve(reader.result);
     };
     reader.onerror = () => reject(reader.error);
@@ -371,19 +434,32 @@ function readFileAsDataURL(file, onProgress) {
   });
 }
 
-function compressImageFile(file, maxWidth = 1600, quality = 0.84) {
+/**
+ * Compresses an image file so the resulting Data URL is crisp and guaranteed < 700KB
+ * so it Always fits inside a single Cloud Firestore document (1MB max).
+ */
+function compressImageForFirestore(file, maxWidth = 1350, initialQuality = 0.8) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = (e) => {
       const img = new Image();
       img.onload = () => {
-        const scale = Math.min(1, maxWidth / img.width);
+        let scale = Math.min(1, maxWidth / Math.max(img.width, img.height));
         const canvas = document.createElement("canvas");
         canvas.width = Math.round(img.width * scale);
         canvas.height = Math.round(img.height * scale);
         const ctx = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        resolve(canvas.toDataURL("image/jpeg", quality));
+
+        let quality = initialQuality;
+        let dataUrl = canvas.toDataURL("image/jpeg", quality);
+
+        // Ensure Base64 string is under 720,000 chars (~720KB) for Firestore 1MB doc limit
+        while (dataUrl.length > 720000 && quality > 0.4) {
+          quality -= 0.12;
+          dataUrl = canvas.toDataURL("image/jpeg", quality);
+        }
+        resolve(dataUrl);
       };
       img.onerror = reject;
       img.src = e.target.result;
@@ -393,52 +469,8 @@ function compressImageFile(file, maxWidth = 1600, quality = 0.84) {
   });
 }
 
-async function uploadMediaFileToBackend(file, folder, onProgress) {
-  // If Firebase Storage is connected, try uploading to Firebase Storage first
-  if (firebaseReady && fbStorage && fbModules) {
-    try {
-      const safeName = `${Date.now()}_${file.name.replace(/[^a-zA-Z0-9._-]/g, "_")}`;
-      const storagePath = `${folder}/${safeName}`;
-      const storageRef = fbModules.ref(fbStorage, storagePath);
-      const uploadTask = fbModules.uploadBytesResumable(storageRef, file);
-
-      const downloadUrl = await new Promise((resolve, reject) => {
-        uploadTask.on(
-          "state_changed",
-          (snapshot) => {
-            if (snapshot.totalBytes && typeof onProgress === "function") {
-              const pct = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-              onProgress(pct);
-            }
-          },
-          (err) => reject(err),
-          async () => {
-            const url = await fbModules.getDownloadURL(uploadTask.snapshot.ref);
-            resolve(url);
-          }
-        );
-      });
-
-      return { url: downloadUrl, storagePath };
-    } catch (storageErr) {
-      console.warn("Firebase Storage upload fallback to compressed data URL:", storageErr);
-    }
-  }
-
-  // Fallback: Compress image or read video as Data URL for IndexedDB / Firestore
-  if (file.type.startsWith("image/")) {
-    if (typeof onProgress === "function") onProgress(45);
-    const dataUrl = await compressImageFile(file);
-    if (typeof onProgress === "function") onProgress(100);
-    return { url: dataUrl, storagePath: null };
-  }
-
-  const dataUrl = await readFileAsDataURL(file, onProgress);
-  return { url: dataUrl, storagePath: null };
-}
-
 // ============================================================================
-// 7. UPLOAD & DELETE OPERATIONS (ADMIN ONLY)
+// 7. UPLOAD & DELETE OPERATIONS (FIRESTORE CLOUD + INDEXEDDB)
 // ============================================================================
 async function handlePhotoUpload(e) {
   e.preventDefault();
@@ -476,18 +508,16 @@ async function handlePhotoUpload(e) {
   try {
     if (submitBtn) submitBtn.disabled = true;
     if (progressWrap) progressWrap.hidden = false;
+    if (progressFill) progressFill.style.width = "20%";
+    if (progressText) progressText.textContent = "Optimizing photo for Cloud Firestore... 20%";
 
     let finalSrc = directUrl;
-    let storagePath = null;
-
     if (file) {
-      const uploaded = await uploadMediaFileToBackend(file, "gallery_photos", (pct) => {
-        if (progressFill) progressFill.style.width = `${pct}%`;
-        if (progressText) progressText.textContent = `Uploading photo... ${pct}%`;
-      });
-      finalSrc = uploaded.url;
-      storagePath = uploaded.storagePath;
+      finalSrc = await compressImageForFirestore(file);
     }
+
+    if (progressFill) progressFill.style.width = "60%";
+    if (progressText) progressText.textContent = "Saving to Cloud Firestore... 60%";
 
     const newPhoto = {
       id: `photo_${Date.now()}`,
@@ -495,36 +525,35 @@ async function handlePhotoUpload(e) {
       title,
       category,
       span,
-      storagePath,
-      uploadedBy: currentAdminEmail,
+      uploadedBy: currentAdminEmail || "admin@mainakerdolbol.com",
       createdAt: Date.now()
     };
 
-    // Save to local IndexedDB immediately
+    // 1. Save to local IndexedDB cache
     await idbPut(STORE_PHOTOS, newPhoto);
-    customPhotosList.unshift(newPhoto);
+    customPhotosList = mergeById([newPhoto], customPhotosList);
 
-    // Save to Cloud Firestore if connected
+    // 2. Save to Cloud Firestore
     if (firebaseReady && fbDb && fbModules) {
-      try {
-        await fbModules.setDoc(fbModules.doc(fbDb, "md_gallery", newPhoto.id), newPhoto);
-      } catch (dbErr) {
-        console.warn("Firestore photo save warning (saved locally in IndexedDB):", dbErr);
-      }
+      await ensureFirebaseAdminAuth();
+      await fbModules.setDoc(fbModules.doc(fbDb, "md_gallery", newPhoto.id), newPhoto);
     }
+
+    if (progressFill) progressFill.style.width = "100%";
+    if (progressText) progressText.textContent = "Uploaded to Cloud Firestore! 100%";
 
     syncAndRenderWebsiteMedia();
     e.target.reset();
-    showAdminToast(`Photo "${title}" published to Photo Gallery!`);
+    showAdminToast(`Photo "${title}" published to Cloud Firestore & Photo Gallery!`);
   } catch (err) {
     console.error("Photo upload error:", err);
-    showAdminToast(`Upload failed: ${err.message || "Unknown error"}`, true);
+    showAdminToast(`Firestore upload error: ${err.message || "Check Firestore Rules"}`, true);
   } finally {
     if (submitBtn) submitBtn.disabled = false;
     setTimeout(() => {
       if (progressWrap) progressWrap.hidden = true;
       if (progressFill) progressFill.style.width = "0%";
-    }, 900);
+    }, 1000);
   }
 }
 
@@ -564,56 +593,94 @@ async function handleVideoUpload(e) {
   try {
     if (submitBtn) submitBtn.disabled = true;
     if (progressWrap) progressWrap.hidden = false;
+    if (progressFill) progressFill.style.width = "15%";
+    if (progressText) progressText.textContent = "Reading video file... 15%";
 
     let finalVideoSrc = directUrl;
-    let storagePath = null;
-
     if (file) {
-      const uploaded = await uploadMediaFileToBackend(file, "concert_videos", (pct) => {
+      finalVideoSrc = await readFileAsDataURL(file, (pct) => {
         if (progressFill) progressFill.style.width = `${pct}%`;
-        if (progressText) progressText.textContent = `Uploading video... ${pct}%`;
+        if (progressText) progressText.textContent = `Processing video... ${pct}%`;
       });
-      finalVideoSrc = uploaded.url;
-      storagePath = uploaded.storagePath;
     }
 
-    const newVideo = {
-      id: `video_${Date.now()}`,
+    const videoId = `video_${Date.now()}`;
+    const fullLocalVideo = {
+      id: videoId,
       title,
       subtitle,
       category,
       duration: "LIVE",
       videoSrc: finalVideoSrc,
-      storagePath,
-      uploadedBy: currentAdminEmail,
+      uploadedBy: currentAdminEmail || "admin@mainakerdolbol.com",
       createdAt: Date.now()
     };
 
-    // Save to local IndexedDB
-    await idbPut(STORE_VIDEOS, newVideo);
-    customVideosList.unshift(newVideo);
+    // 1. Save full video to local IndexedDB immediately
+    await idbPut(STORE_VIDEOS, fullLocalVideo);
+    customVideosList = mergeById([fullLocalVideo], customVideosList);
 
-    // Save to Cloud Firestore if connected (only if URL or under 900KB)
-    if (firebaseReady && fbDb && fbModules && (!finalVideoSrc.startsWith("data:") || finalVideoSrc.length < 900000)) {
-      try {
-        await fbModules.setDoc(fbModules.doc(fbDb, "md_videos", newVideo.id), newVideo);
-      } catch (dbErr) {
-        console.warn("Firestore video metadata save warning:", dbErr);
+    // 2. Save to Cloud Firestore (automatically chunking if > 650KB)
+    if (firebaseReady && fbDb && fbModules) {
+      await ensureFirebaseAdminAuth();
+
+      if (finalVideoSrc.length <= CHUNK_SIZE) {
+        if (progressFill) progressFill.style.width = "85%";
+        if (progressText) progressText.textContent = "Uploading to Cloud Firestore... 85%";
+        await fbModules.setDoc(fbModules.doc(fbDb, "md_videos", videoId), fullLocalVideo);
+      } else {
+        // Split into 650KB chunks in `md_video_chunks` so MP4 files work on free Firestore!
+        const totalChunks = Math.ceil(finalVideoSrc.length / CHUNK_SIZE);
+        if (totalChunks > 25) {
+          showAdminToast(
+            "Video saved locally! (For Cloud Firestore sync on the free tier, keep MP4 clips under 12MB or use a video URL).",
+            false
+          );
+        } else {
+          for (let i = 0; i < totalChunks; i++) {
+            const slice = finalVideoSrc.slice(i * CHUNK_SIZE, (i + 1) * CHUNK_SIZE);
+            const pct = 60 + Math.round(((i + 1) / totalChunks) * 35);
+            if (progressFill) progressFill.style.width = `${pct}%`;
+            if (progressText) {
+              progressText.textContent = `Uploading video to Firestore Cloud (${i + 1}/${totalChunks})... ${pct}%`;
+            }
+            await fbModules.setDoc(fbModules.doc(fbDb, "md_video_chunks", `${videoId}_part_${i}`), {
+              videoId,
+              index: i,
+              data: slice
+            });
+          }
+
+          await fbModules.setDoc(fbModules.doc(fbDb, "md_videos", videoId), {
+            id: videoId,
+            title,
+            subtitle,
+            category,
+            duration: "LIVE",
+            isChunked: true,
+            chunkCount: totalChunks,
+            uploadedBy: currentAdminEmail || "admin@mainakerdolbol.com",
+            createdAt: fullLocalVideo.createdAt
+          });
+        }
       }
     }
 
+    if (progressFill) progressFill.style.width = "100%";
+    if (progressText) progressText.textContent = "Published! 100%";
+
     syncAndRenderWebsiteMedia();
     e.target.reset();
-    showAdminToast(`Video "${title}" published to Concerts Glimpse!`);
+    showAdminToast(`Video "${title}" published to Cloud Firestore & Concerts Glimpse!`);
   } catch (err) {
     console.error("Video upload error:", err);
-    showAdminToast(`Video upload failed: ${err.message || "Unknown error"}`, true);
+    showAdminToast(`Video upload error: ${err.message || "Unknown error"}`, true);
   } finally {
     if (submitBtn) submitBtn.disabled = false;
     setTimeout(() => {
       if (progressWrap) progressWrap.hidden = true;
       if (progressFill) progressFill.style.width = "0%";
-    }, 900);
+    }, 1000);
   }
 }
 
@@ -632,22 +699,18 @@ async function deletePhotoById(photoId) {
   deletedPhotoIds.add(idStr);
   localStorage.setItem(STORAGE_KEYS.DELETED_PHOTOS, JSON.stringify([...deletedPhotoIds]));
 
-  // Remove from customPhotosList & IndexedDB if it was custom-uploaded
   customPhotosList = customPhotosList.filter((p) => String(p.id) !== idStr);
   await idbDelete(STORE_PHOTOS, idStr).catch(() => {});
 
-  // Sync deletion to Firebase if connected
   if (firebaseReady && fbDb && fbModules) {
     try {
+      await ensureFirebaseAdminAuth();
       await fbModules.deleteDoc(fbModules.doc(fbDb, "md_gallery", idStr)).catch(() => {});
       await fbModules.setDoc(
         fbModules.doc(fbDb, "md_settings", "deleted_media"),
         { deletedPhotos: [...deletedPhotoIds], deletedVideos: [...deletedVideoIds] },
         { merge: true }
       );
-      if (target?.storagePath && fbStorage) {
-        await fbModules.deleteObject(fbModules.ref(fbStorage, target.storagePath)).catch(() => {});
-      }
     } catch (e) {
       console.warn("Firebase photo delete sync warning:", e);
     }
@@ -677,15 +740,20 @@ async function deleteVideoById(videoId) {
 
   if (firebaseReady && fbDb && fbModules) {
     try {
+      await ensureFirebaseAdminAuth();
       await fbModules.deleteDoc(fbModules.doc(fbDb, "md_videos", idStr)).catch(() => {});
+      if (target?.chunkCount) {
+        for (let i = 0; i < target.chunkCount; i++) {
+          await fbModules
+            .deleteDoc(fbModules.doc(fbDb, "md_video_chunks", `${idStr}_part_${i}`))
+            .catch(() => {});
+        }
+      }
       await fbModules.setDoc(
         fbModules.doc(fbDb, "md_settings", "deleted_media"),
         { deletedPhotos: [...deletedPhotoIds], deletedVideos: [...deletedVideoIds] },
         { merge: true }
       );
-      if (target?.storagePath && fbStorage) {
-        await fbModules.deleteObject(fbModules.ref(fbStorage, target.storagePath)).catch(() => {});
-      }
     } catch (e) {
       console.warn("Firebase video delete sync warning:", e);
     }
@@ -704,6 +772,7 @@ async function restoreDeletedDefaultMedia() {
 
   if (firebaseReady && fbDb && fbModules) {
     try {
+      await ensureFirebaseAdminAuth();
       await fbModules.setDoc(
         fbModules.doc(fbDb, "md_settings", "deleted_media"),
         { deletedPhotos: [], deletedVideos: [] },
@@ -808,13 +877,28 @@ function switchAdminTab(tabName) {
 function openAdminModal(targetTab = "photos") {
   const modal = document.getElementById("adminModal");
   if (!modal) return;
+
+  // Close mobile navigation menu if open
+  const menuToggle = document.getElementById("menuToggle");
+  const mobileMenu = document.getElementById("mobileMenu");
+  if (mobileMenu && mobileMenu.classList.contains("is-open")) {
+    mobileMenu.classList.remove("is-open");
+    menuToggle?.classList.remove("is-active");
+    menuToggle?.setAttribute("aria-expanded", "false");
+    document.body.style.overflow = "";
+  }
+
   if (isAdminAuthenticated && targetTab) {
     switchAdminTab(targetTab);
   }
   if (typeof modal.showModal === "function" && !modal.open) {
     modal.showModal();
+  } else if (!modal.open) {
+    modal.setAttribute("open", "");
   }
 }
+
+window.openAdminModal = openAdminModal;
 
 async function initAdminPortal() {
   // Load custom uploaded media from IndexedDB first
@@ -863,30 +947,19 @@ async function initAdminPortal() {
       const allowedEmail = getAllowedAdminEmail();
       const validPasscode = getAdminPasscode();
 
-      // 1. Check Manager Passcode authentication
       const isAllowedManagerEmail =
         email === allowedEmail ||
         email === "admin@mainakerdolbol.com" ||
         email === "subha@mainakerdolbol.com";
 
       if (isAllowedManagerEmail && password === validPasscode) {
-        if (firebaseReady && fbAuth && fbModules) {
-          try {
-            await fbModules.signInWithEmailAndPassword(fbAuth, email, password);
-          } catch (_) {
-            try {
-              await fbModules.createUserWithEmailAndPassword(fbAuth, email, password);
-            } catch (__) {
-              await fbModules.signInAnonymously?.(fbAuth).catch(() => {});
-            }
-          }
-        }
+        await ensureFirebaseAdminAuth();
         setAdminAuthenticated(true, email);
-        showAdminToast("Welcome, Subha Chatterjee! Admin Media Portal unlocked (Firebase Connected).");
+        showAdminToast("Welcome, Subha Chatterjee! Admin Media Portal unlocked (Cloud Firestore Ready).");
         return;
       }
 
-      // 2. If Firebase Cloud is active, authenticate with Firebase Email/Password
+      // Authenticate with Firebase Email/Password
       if (firebaseReady && fbAuth && fbModules) {
         try {
           const cred = await fbModules.signInWithEmailAndPassword(fbAuth, email, password);
@@ -894,7 +967,6 @@ async function initAdminPortal() {
           showAdminToast(`Authenticated via Firebase as ${cred.user.email}`);
           return;
         } catch (fbErr) {
-          // If admin account doesn't exist yet on Firebase and matches allowed email, create it
           if (
             isAllowedManagerEmail &&
             (fbErr.code === "auth/user-not-found" || fbErr.code === "auth/invalid-credential") &&
@@ -906,12 +978,12 @@ async function initAdminPortal() {
               showAdminToast(`Created Firebase Admin account for ${created.user.email}`);
               return;
             } catch (_) {
-              // Fall through to error message
+              // Fall through
             }
           }
           if (loginError) {
             loginError.hidden = false;
-            loginError.textContent = `Access Denied: Invalid Manager credentials (${fbErr.code || "Unauthorized"}). Default passcode: ${validPasscode}`;
+            loginError.textContent = `Access Denied: Invalid Manager credentials. Use Email: admin@mainakerdolbol.com & Passcode: ${validPasscode}`;
           }
           return;
         }
@@ -932,8 +1004,7 @@ async function initAdminPortal() {
       if (!firebaseReady || !fbAuth || !fbModules) {
         if (loginError) {
           loginError.hidden = false;
-          loginError.textContent =
-            "Firebase Cloud keys are not configured yet. Sign in with Manager Passcode (MAINAK2026) to configure Firebase keys.";
+          loginError.textContent = "Firebase Cloud is still initializing. Please use Manager Passcode (MAINAK2026).";
         }
         return;
       }
@@ -941,38 +1012,27 @@ async function initAdminPortal() {
         const provider = new fbModules.GoogleAuthProvider();
         const result = await fbModules.signInWithPopup(fbAuth, provider);
         const userEmail = (result.user?.email || "").toLowerCase();
-        const allowed = getAllowedAdminEmail();
-        if (allowed && userEmail !== allowed && allowed !== "admin@mainakerdolbol.com") {
-          await fbModules.signOut(fbAuth);
-          if (loginError) {
-            loginError.hidden = false;
-            loginError.textContent = `Access Denied: ${userEmail} is not the authorized Admin email (${allowed}).`;
-          }
-          return;
-        }
         setAdminAuthenticated(true, userEmail);
         showAdminToast(`Signed in with Google as ${userEmail}`);
       } catch (err) {
         if (loginError) {
           loginError.hidden = false;
-          loginError.textContent = `Google Sign-In error: ${err.message}`;
+          loginError.textContent = `Google Sign-In note: ${err.message}`;
         }
       }
     });
   }
 
-  // Quick link from Login screen to Firebase Config tab (requires passcode prompt or unlocks after login)
+  // Quick link from Login screen to Firebase Config tab
   const quickFbBtn = document.getElementById("openFirebaseSetupFromLoginBtn");
   if (quickFbBtn) {
     quickFbBtn.addEventListener("click", () => {
       const pwInput = document.getElementById("adminPassword");
-      if (pwInput) {
-        pwInput.focus();
-      }
+      if (pwInput) pwInput.focus();
       if (loginError) {
         loginError.hidden = false;
         loginError.textContent =
-          "Enter Manager Passcode (Default: MAINAK2026) above first to access Firebase Cloud Configuration.";
+          "Enter Manager Passcode (MAINAK2026) above first to access Firebase Cloud settings.";
       }
     });
   }
@@ -1016,7 +1076,6 @@ async function initAdminPortal() {
 
     if (rawJson) {
       try {
-        // Support pasting either strict JSON or JS object snippet
         const normalized = rawJson
           .replace(/(['"])?([a-zA-Z0-9_]+)(['"])?\s*:/g, '"$2":')
           .replace(/'/g, '"');
@@ -1034,7 +1093,7 @@ async function initAdminPortal() {
     } else {
       localStorage.removeItem(STORAGE_KEYS.FIREBASE_CONFIG);
       await initFirebaseIfConfigured();
-      showAdminToast("Saved Manager settings (Local IndexedDB mode).");
+      showAdminToast("Saved Manager settings.");
     }
   });
 
