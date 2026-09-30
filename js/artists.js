@@ -23,7 +23,6 @@ const artists = [
     album: "Bhitor Bahire (ভিতর বাহিরে)",
     youtube: "assets/videos/1.mp4",
     instagram: "https://www.instagram.com/mainakpaladhi?utm_source=ig_web_button_share_sheet&stkn=ZDNlZDc0MzIxNw==",
-    spotify: "https://open.spotify.com/"
   },
   {
     id: 2,
@@ -157,7 +156,6 @@ function renderArtistsGrid() {
           <div class="artist-card-footer">
             <div class="artist-mini-socials" onclick="event.stopPropagation();">
               <a href="${artist.instagram}" target="_blank" rel="noopener noreferrer" aria-label="${artist.name} Instagram">IG</a>
-              <a href="${artist.spotify}" target="_blank" rel="noopener noreferrer" aria-label="${artist.name} Spotify">SP</a>
               <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" aria-label="${artist.name} YouTube">YT</a>
             </div>
             <span class="artist-profile-btn">
@@ -274,7 +272,6 @@ function initArtistInteractiveSpotlight() {
 
               <div class="artist-mini-socials" style="margin-left: auto;">
                 <a href="${artist.instagram}" target="_blank" rel="noopener noreferrer" aria-label="${artist.name} Instagram">INSTAGRAM</a>
-                <a href="${artist.spotify}" target="_blank" rel="noopener noreferrer" aria-label="${artist.name} Spotify">SPOTIFY</a>
               </div>
             </div>
           </div>
@@ -371,8 +368,6 @@ function openArtistModal(artistId) {
           <a href="${artist.instagram}" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
             <span>INSTAGRAM</span>
           </a>
-          <a href="${artist.spotify}" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
-            <span>SPOTIFY</span>
           </a>
         </div>
       </div>
