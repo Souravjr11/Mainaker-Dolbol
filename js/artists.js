@@ -95,7 +95,7 @@ const artists = [
     shortName: "SUBHA",
     name: "Subha Chatterjee",
     role: "Full Band Manager",
-    image: "assets/artists/artist-6.jpg",
+    image: "assets/artists/manager.jpeg",
     shortBio: "Full Band Manager overseeing concert bookings, tour operations, stage production, and collective direction for MAINAKER DOLBOL.",
     bio: "Subha Chatterjee is the Full Band Manager and organizational backbone of MAINAKER DOLBOL. Steering all concert bookings, festival appearances, stage production, and tour logistics, his leadership ensures every show delivers a seamless, world-class live experience.",
     quote: "Great music moves the soul — great management makes sure the stage is ready for the magic.",
