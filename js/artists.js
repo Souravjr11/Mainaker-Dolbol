@@ -38,6 +38,7 @@ const artists = [
     instrument: "Classical & Folk Tabla, Hand Percussion",
     featuredPerformance: "Live Concert Stage — Classical & Folk Rhythm Showcase",
     album: "Bhitor Bahire Live",
+    facebook: "https://www.facebook.com/share/1Fk47RaGLA/",
   
   },
   {
@@ -155,8 +156,9 @@ function renderArtistsGrid() {
 
           <div class="artist-card-footer">
             <div class="artist-mini-socials" onclick="event.stopPropagation();">
-              <a href="${artist.instagram}" target="_blank" rel="noopener noreferrer" aria-label="${artist.name} Instagram">IG</a>
-              <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" aria-label="${artist.name} YouTube">YT</a>
+              ${artist.instagram ? `<a href="${artist.instagram}" target="_blank" rel="noopener noreferrer" aria-label="${artist.name} Instagram">IG</a>` : ""}
+              ${artist.facebook ? `<a href="${artist.facebook}" target="_blank" rel="noopener noreferrer" aria-label="${artist.name} Facebook">FB</a>` : ""}
+              <a href="https://www.youtube.com/@mainak311" target="_blank" rel="noopener noreferrer" aria-label="${artist.name} YouTube">YT</a>
             </div>
             <span class="artist-profile-btn">
               VIEW PROFILE <span>&rarr;</span>
@@ -271,7 +273,8 @@ function initArtistInteractiveSpotlight() {
               </button>
 
               <div class="artist-mini-socials" style="margin-left: auto;">
-                <a href="${artist.instagram}" target="_blank" rel="noopener noreferrer" aria-label="${artist.name} Instagram">INSTAGRAM</a>
+                ${artist.instagram ? `<a href="${artist.instagram}" target="_blank" rel="noopener noreferrer" aria-label="${artist.name} Instagram">INSTAGRAM &nearr;</a>` : ""}
+                ${artist.facebook ? `<a href="${artist.facebook}" target="_blank" rel="noopener noreferrer" aria-label="${artist.name} Facebook">FACEBOOK &nearr;</a>` : ""}
               </div>
             </div>
           </div>
@@ -365,10 +368,16 @@ function openArtistModal(artistId) {
           >
             <span>WATCH ON YOUTUBE</span>
           </button>
-          <a href="${artist.instagram}" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
-            <span>INSTAGRAM</span>
-          </a>
-          </a>
+          ${artist.instagram ? `
+            <a href="${artist.instagram}" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+              <span>INSTAGRAM &nearr;</span>
+            </a>
+          ` : ""}
+          ${artist.facebook ? `
+            <a href="${artist.facebook}" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+              <span>FACEBOOK &nearr;</span>
+            </a>
+          ` : ""}
         </div>
       </div>
     </div>
