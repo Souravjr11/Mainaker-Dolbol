@@ -74,14 +74,14 @@ const gallery = [
   { id: 14, src: "assets/artists/artist-vocalist-8.jpeg", title: "MAINAKER DOLBOL — Concert Stage Ensemble", category: "LIVE", span: "span-tall" },
   { id: 15, src: "assets/artists/artist-vocalist-2.jpeg", title: "Mainak Paladhi — Dubki & Stage Anthem", category: "LIVE", span: "span-wide" },
   { id: 16, src: "assets/artists/artist-guiterist-1.jpeg", title: "Sanjay Seal — Electric Solo Under Spotlights", category: "LIVE", span: "" },
-  { id: 17, src: "assets/artists/flute-2.jpeg", title: "Lagan Dasgupta — Live Concert Flute Solo", category: "LIVE", span: "span-wide" },
+  { id: 17, src: "assets/artists/flute-2.jpeg", title: "Lagan Dasgupta — Live Concert Flute Solo", category: "PORTRAITS", span: "span-tall" },
   { id: 18, src: "assets/artists/artist-vocalist-6.jpeg", title: "11th Durgapur International Film Festival (DIFF)", category: "TRAVEL", span: "span-wide" },
   { id: 19, src: "assets/artists/artist-tabla-1.jpeg", title: "Arijit Talukder — Classical Rhythm Session", category: "STUDIO", span: "" },
   { id: 20, src: "assets/artists/artist-keyboardist-1.jpeg", title: "Udayan Chakraborty — Keys & Backing Harmonies", category: "STUDIO", span: "" },
   { id: 21, src: "assets/artists/artist-vocalist-5.jpeg", title: "Mainak Paladhi — High-Note Crescendo", category: "LIVE", span: "" },
   { id: 22, src: "assets/artists/artist-vocalist-5-with-celeb.jpeg", title: "Cultural Felicitation & Backstage Meet", category: "BACKSTAGE", span: "" },
   { id: 23, src: "assets/artists/artist-vocalist-9.jpeg", title: "Mainak Paladhi — Monochrome Stage Portrait", category: "PORTRAITS", span: "span-tall" },
-  { id: 24, src: "assets/artists/artist-vocalist-7.jpeg", title: "Mainak Paladhi — Arena Spotlight Moment", category: "LIVE", span: "span-wide" },
+  { id: 24, src: "assets/artists/artist-vocalist-7.jpeg", title: "Mainak Paladhi — Arena Spotlight Moment", category: "LIVE", span: "span-featured" },
   { id: 25, src: "assets/artists/flute-1.jpeg", title: "Lagan Dasgupta — Classical & Folk Flute Virtuoso", category: "PORTRAITS", span: "span-tall" },
   { id: 26, src: "assets/artists/artist-vocalist-10.jpeg", title: "MAINAKER DOLBOL — Festival Tour Finale", category: "TRAVEL", span: "" }
 ];
