@@ -4,6 +4,29 @@
    Targets: 1920px, 1440px, 1024px, 768px, 425px, 375px, 320px
    ========================================================================== */
 
+/* Universal Viewport & Section Containment */
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+  overflow-x: hidden;
+  position: relative;
+  -webkit-text-size-adjust: 100%;
+}
+
+main,
+#main-content,
+section,
+article,
+aside,
+footer,
+.site-footer {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+}
+
 /* --------------------------------------------------------------------------
    LARGE DESKTOP (1920px+)
    -------------------------------------------------------------------------- */
@@ -236,6 +259,33 @@
     gap: 0.85rem;
   }
 
+  /* Floating badges and decorative stages containment */
+  .about-visual::before {
+    left: 0;
+    top: 0;
+  }
+
+  .about-floating-badge {
+    right: 0.5rem;
+    bottom: 0.5rem;
+    max-width: calc(100% - 1rem);
+  }
+
+  .leader-portrait-stage::before {
+    right: 0;
+    top: 0;
+  }
+
+  .leader-portrait-stage {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .artists-section {
+    overflow-x: clip;
+    max-width: 100%;
+  }
+
   /* Intentional Horizontal Artist Slider on Mobile */
   .artists-grid {
     display: flex;
@@ -243,9 +293,10 @@
     scroll-snap-type: x mandatory;
     gap: 1.15rem;
     padding-bottom: 1rem;
-    margin-inline: -1.125rem;
-    padding-inline: 1.125rem;
+    margin-inline: 0;
+    padding-inline: 0;
     -webkit-overflow-scrolling: touch;
+    max-width: 100%;
   }
 
   .artists-grid::-webkit-scrollbar {
