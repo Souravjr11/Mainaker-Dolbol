@@ -90,6 +90,33 @@ window.videosData = videos;
 window.galleryData = gallery;
 let currentGalleryFilter = "ALL";
 
+function formatPhotoSrc(src) {
+  if (!src || typeof src !== "string") return src;
+  const trimmed = src.trim();
+  const driveMatch = trimmed.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || trimmed.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+  if (driveMatch && driveMatch[1]) {
+    return `https://lh3.googleusercontent.com/d/${driveMatch[1]}`;
+  }
+  return trimmed;
+}
+
+function renderVideoThumbnail(video) {
+  const src = video.videoSrc || "";
+  // YouTube thumbnail
+  const ytMatch = src.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([a-zA-Z0-9_-]{11})/);
+  if (ytMatch && ytMatch[1]) {
+    return `<img src="https://img.youtube.com/vi/${ytMatch[1]}/hqdefault.jpg" class="video-thumb-img" alt="${video.title}" loading="lazy">`;
+  }
+  // Google Drive thumbnail
+  const driveMatch = src.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || src.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+  if (driveMatch && driveMatch[1]) {
+    return `<img src="https://lh3.googleusercontent.com/d/${driveMatch[1]}" class="video-thumb-img" alt="${video.title}" loading="lazy" onerror="this.onerror=null;this.src='assets/hero/band-1.jpg';">`;
+  }
+  // Direct file or data URL
+  const videoTimeSrc = src.includes("#t=") || src.startsWith("data:") ? src : src + "#t=0.5";
+  return `<video src="${videoTimeSrc}" class="video-thumb-img" muted loop playsinline preload="metadata"></video>`;
+}
+
 function formatVideoTime(seconds) {
   if (!Number.isFinite(seconds) || seconds <= 0) return "LIVE";
   const mins = Math.floor(seconds / 60);
@@ -118,14 +145,7 @@ function renderVideosGrid() {
         aria-label="Play concert video: ${video.title}"
       >
         <div class="video-thumb-wrap">
-          <video
-            src="${video.videoSrc.includes("#t=") || video.videoSrc.startsWith("data:") ? video.videoSrc : video.videoSrc + "#t=0.5"}"
-            class="video-thumb-img"
-            muted
-            loop
-            playsinline
-            preload="metadata"
-          ></video>
+          ${renderVideoThumbnail(video)}
           <div class="video-thumb-overlay">
             <span class="video-category-tag">${video.category}</span>
             <button
@@ -184,19 +204,58 @@ window.renderVideosGrid = renderVideosGrid;
 function initVideoModal() {
   const videoModal = document.getElementById("videoModal");
   const localVideo = document.getElementById("localVideoPlayer");
+  const iframeVideo = document.getElementById("iframeVideoPlayer");
   const titleEl = document.getElementById("videoModalTitle");
   if (!videoModal || !localVideo) return;
+
+  function formatVideoUrl(url) {
+    if (!url) return { isEmbed: false, src: "" };
+    const trimmed = url.trim();
+
+    // YouTube formats
+    const ytMatch = trimmed.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([a-zA-Z0-9_-]{11})/);
+    if (ytMatch && ytMatch[1]) {
+      return { isEmbed: true, src: `https://www.youtube.com/embed/${ytMatch[1]}?autoplay=1&rel=0` };
+    }
+
+    // Google Drive video formats
+    const driveMatch = trimmed.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || trimmed.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+    if (driveMatch && driveMatch[1]) {
+      return { isEmbed: true, src: `https://drive.google.com/file/d/${driveMatch[1]}/preview` };
+    }
+
+    const isEmbed = trimmed.includes("/embed/") || trimmed.includes("/preview");
+    return { isEmbed, src: trimmed };
+  }
 
   function openVideoModal(url, title = "LIVE CONCERT GLIMPSE") {
     if (!url) return;
     if (titleEl) titleEl.textContent = title;
-    localVideo.hidden = false;
-    localVideo.src = url;
-    localVideo.currentTime = 0;
+
+    const { isEmbed, src } = formatVideoUrl(url);
+
+    if (isEmbed && iframeVideo) {
+      localVideo.pause();
+      localVideo.removeAttribute("src");
+      localVideo.style.display = "none";
+
+      iframeVideo.style.display = "block";
+      iframeVideo.src = src;
+    } else {
+      if (iframeVideo) {
+        iframeVideo.removeAttribute("src");
+        iframeVideo.style.display = "none";
+      }
+      localVideo.style.display = "block";
+      localVideo.hidden = false;
+      localVideo.src = src;
+      localVideo.currentTime = 0;
+      localVideo.play().catch(() => {});
+    }
+
     if (typeof videoModal.showModal === "function") {
       videoModal.showModal();
     }
-    localVideo.play().catch(() => {});
   }
 
   // Stop playback whenever the dialog closes
@@ -204,6 +263,10 @@ function initVideoModal() {
     localVideo.pause();
     localVideo.removeAttribute("src");
     localVideo.load();
+    if (iframeVideo) {
+      iframeVideo.removeAttribute("src");
+      iframeVideo.style.display = "none";
+    }
   });
 
   window.openVideoModal = openVideoModal;
@@ -272,11 +335,12 @@ function initPhotoGallery() {
           aria-label="Open photo in lightbox: ${item.title}"
         >
           <img
-            src="${item.src}"
+            src="${formatPhotoSrc(item.src)}"
             alt="${item.title}"
             loading="lazy"
             width="700"
             height="520"
+            onerror="this.onerror=null;this.src='assets/hero/band-1.jpg';"
           >
           <button
             type="button"
@@ -319,7 +383,7 @@ function initPhotoGallery() {
     if (!activeLightboxList.length) return;
     const item = activeLightboxList[currentIndex];
     if (lightboxImg) {
-      lightboxImg.src = item.src;
+      lightboxImg.src = formatPhotoSrc(item.src);
       lightboxImg.alt = item.title;
     }
     if (lightboxCaption) lightboxCaption.textContent = item.title;

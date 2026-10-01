@@ -472,6 +472,37 @@ function compressImageForFirestore(file, maxWidth = 1350, initialQuality = 0.8) 
 // ============================================================================
 // 7. UPLOAD & DELETE OPERATIONS (FIRESTORE CLOUD + INDEXEDDB)
 // ============================================================================
+
+/**
+ * Normalizes external URLs (Google Drive / YouTube) into embeddable / direct streamable URLs.
+ */
+function normalizeMediaUrl(url, type = "image") {
+  if (!url || typeof url !== "string") return url;
+  const trimmed = url.trim();
+
+  // 1. Google Drive URLs
+  const driveMatch = trimmed.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || trimmed.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+  if (driveMatch && driveMatch[1]) {
+    const fileId = driveMatch[1];
+    if (type === "video") {
+      return `https://drive.google.com/file/d/${fileId}/preview`;
+    } else {
+      // High-speed Google CDN endpoint for images
+      return `https://lh3.googleusercontent.com/d/${fileId}`;
+    }
+  }
+
+  // 2. YouTube URLs
+  if (type === "video") {
+    const ytMatch = trimmed.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([a-zA-Z0-9_-]{11})/);
+    if (ytMatch && ytMatch[1]) {
+      return `https://www.youtube.com/embed/${ytMatch[1]}`;
+    }
+  }
+
+  return trimmed;
+}
+
 async function handlePhotoUpload(e) {
   e.preventDefault();
   if (!isAdminAuthenticated) {
@@ -514,6 +545,8 @@ async function handlePhotoUpload(e) {
     let finalSrc = directUrl;
     if (file) {
       finalSrc = await compressImageForFirestore(file);
+    } else {
+      finalSrc = normalizeMediaUrl(directUrl, "image");
     }
 
     if (progressFill) progressFill.style.width = "60%";
@@ -602,6 +635,8 @@ async function handleVideoUpload(e) {
         if (progressFill) progressFill.style.width = `${pct}%`;
         if (progressText) progressText.textContent = `Processing video... ${pct}%`;
       });
+    } else {
+      finalVideoSrc = normalizeMediaUrl(directUrl, "video");
     }
 
     const videoId = `video_${Date.now()}`;
