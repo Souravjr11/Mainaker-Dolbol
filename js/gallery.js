@@ -80,7 +80,8 @@ const gallery = [
   { id: 20, src: "assets/artists/artist-vocalist-5-with-celeb.jpeg", title: "Cultural Felicitation & Backstage Meet", category: "BACKSTAGE", span: "" },
   { id: 21, src: "assets/artists/artist-vocalist-9.jpeg", title: "Mainak Paladhi — Monochrome Stage Portrait", category: "PORTRAITS", span: "span-tall" },
   { id: 22, src: "assets/artists/artist-vocalist-7.jpeg", title: "Mainak Paladhi — Arena Spotlight Moment", category: "LIVE", span: "span-wide" },
-  { id: 23, src: "assets/artists/artist-vocalist-10.jpeg", title: "MAINAKER DOLBOL — Festival Tour Finale", category: "TRAVEL", span: "" }
+  { id: 23, src: "assets/artists/artist-vocalist-10.jpeg", title: "MAINAKER DOLBOL — Festival Tour Finale", category: "TRAVEL", span: "" },
+  { id: 24, src: "assets/artists/flute-1.jpeg", title: "Lagan Dasgupta — Classical & Folk Flute Virtuoso", category: "PORTRAITS", span: "span-tall" }
 ];
 
 window.defaultVideosData = videos.map((v) => ({ ...v }));

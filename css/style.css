@@ -2402,6 +2402,21 @@ ol {
   margin-inline: auto;
 }
 
+@media (min-width: 1025px) {
+  .artists-grid > .artist-card:last-child:nth-child(3n + 1) {
+    grid-column: 2;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .artists-grid > .artist-card:last-child:nth-child(odd) {
+    grid-column: span 2;
+    max-width: 480px;
+    width: 100%;
+    margin-inline: auto;
+  }
+}
+
 .artist-card {
   position: relative;
   background: var(--bg-card);
